@@ -175,6 +175,16 @@ router.post('/Patient/logout', function (req, res) {
     req.logout();
     res.status(200).end();
 });
+router.get('/Patient', function (req, res) {
+    Patient.find((err, patient) => {
+        if (err) {
+            console.log(err);
+        }
+        else {
+            res.json(patient);
+        }
+    })
+});
 
 // Middleware
 app.use(bodyParser.json());
