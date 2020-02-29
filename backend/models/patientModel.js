@@ -1,26 +1,71 @@
 "use strict";
 const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
+
 const patientSchema = new mongoose.Schema({
+    registerDate: {
+        type: Date,
+        required: true,
+        default: Date.now
+    },
     email: {
         type: String,
         required: true,
         lowercase: true,
         unique: true
     },
-    name: {
-        type: String,
-        required: true,
-    },
     password: {
         type: String,
         required: true
     },
-    registerDate: {
-        type: Date,
+    name: {
+        type: String,
         required: true,
-        default: Date.now
-    }
+    },
+    birthDate: {
+        type: Date,
+        required: true
+    },
+
+    symptoms: {
+        type: Array,
+        required: true,
+    },
+    severity: {
+        type: String,
+        required: true,
+    },
+
+    heartRate: {
+        type: Array,
+        required: true,
+        default: []
+    },
+    bloodPressure: {
+        type: Array,
+        required: true,
+        default: []
+    },
+    calorieIntake: {
+        type: Array,
+        required: true,
+        default: []
+    },
+    alcoholIntake: {
+        type: Array,
+        required: true,
+        default: []
+    },
+    stepsTaken: {
+        type: Array,
+        required: true,
+        default: []
+    },
+    timeSlept: {
+        type: Array,
+        required: true,
+        default: []
+    },
 });
 patientSchema.pre("save", function (next) {
     var patient = this;
