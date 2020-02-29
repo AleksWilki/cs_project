@@ -18,19 +18,49 @@ const Patient = require('./models/patientModel');
 passport.serializeUser(function (user, done) {
     done(null, user);
 });
-passport.deserializeUser(function (id, done) {
-    User.findById(id, function (err, user) {
-        done(err, user);
+passport.deserializeUser(
+    function (req, id, done) {
+        var DB;
+        if (req.url === "/Staff/logout") {
+            DB = Staff;
+        } else if (req.url === "/Patient/logout") {
+            DB = Patient
+        }
+        DB.findById(id, function (err, user) {
+            done(err, user, { message: 'Successful logout' });
+        });
     });
-});
 passport.use(new LocalStrategy(
     {
         usernameField: 'email',
         passwordField: 'password',
         passReqToCallback: true
     },
-    function (req, username, password, done) {
-        console.log("req:", req)
+    function (req, email, password, done) {
+        var DB;
+        if (req.url === "/Staff/login") {
+            DB = Staff;
+        } else if (req.url === "/Patient/login") {
+            DB = Patient
+        }
+        DB.findOne({ email: email })
+        .then(user => {
+            if (user) {
+                user.passwordComparison(password).then(passwordsMatch => {
+                    if (passwordsMatch) {
+                        return done(null, user);
+                    }
+                    else {
+                        return done(null, false, { message: 'Incorrect password' });
+                    }
+                });
+            } else {
+                return done(null, false, { message: 'Account not found' });
+            }
+        })
+        .catch(error => {
+            return done(null, false, { message: error });
+        });
     }
 ));
 app.use(expressSession({
@@ -85,6 +115,14 @@ router.delete('/Staff/:id', function (req, res) {
         }
     });
 });
+router.post('/Staff/login', passport.authenticate('local'), function (req, res) {
+    res.status(200).end();
+});
+router.post('/Staff/logout', function (req, res) {
+    req.logout();
+    res.status(200).end();
+});
+
 
 // Patient Routes
 router.post('/Patient/register', function (req, res) {
@@ -130,15 +168,22 @@ router.delete('/Patient/:id', function (req, res) {
         }
     });
 });
+router.post('/Patient/login', passport.authenticate('local'), function (req, res) {
+    res.status(200).end();
+});
+router.post('/Patient/logout', function (req, res) {
+    req.logout();
+    res.status(200).end();
+});
 
 // Middleware
+app.use(bodyParser.json());
 app.use(passport.initialize());
 app.use(passport.session());
 app.use('/', router);
 app.set("port", process.env.PORT || port);
 app.use(express.json());
-app.use(cors());
-app.use(bodyParser.json());
+app.use(cors({ credentials: true }));
 
 // Mongoose connection
 mongoose.set('useCreateIndex', true);
