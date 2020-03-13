@@ -190,10 +190,11 @@ router.get('/Patient', function (req, res) {
 app.use(bodyParser.json());
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(cors({ credentials: true }));
 app.use('/', router);
 app.set("port", process.env.PORT || port);
 app.use(express.json());
-app.use(cors({ credentials: true }));
+
 
 // Mongoose connection
 mongoose.set('useCreateIndex', true);
