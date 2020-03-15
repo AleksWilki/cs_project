@@ -37,6 +37,14 @@ const patientSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    appointmentBooked: {
+        type: Boolean,
+        required: true,
+    },
+    appointmentDate: {
+        type: Date,
+        required: false,
+    },
 
     heartRate: {
         type: Array,
