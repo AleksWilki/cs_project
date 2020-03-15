@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import Axios from 'axios';
 import './App.css';
 
+const patientUrl = "http://localhost:3000/Patient/"
+
 class Patient extends Component {
     render() {
         return (
@@ -19,15 +21,34 @@ class App extends Component {
     constructor(props) {
         super(props);
 
+        this.filterName = this.filterName.bind(this);
+        this.filterEmail = this.filterEmail.bind(this);
+        this.filterSeverity = this.filterSeverity.bind(this);
+        this.filter = this.filter.bind(this);
+
         this.state = {
             patients: [],
+            filterName: '',
+            filterEmail: '',
+            filterSeverity: '',
         }
     }
     componentDidMount() {
         this.getPatients();
     }
+    filterName(e) { this.setState({ filterName: e.target.value }) }
+    filterEmail(e) { this.setState({ filterEmail: e.target.value }) }
+    filterSeverity(e) { this.setState({ filterSeverity: e.target.value }) }
+    filter() {
+        let filter = `"name":"${this.state.filterName}","email":"${this.state.filterEmail}","severity":"${this.state.filterSeverity}"`;
+        Axios.get(patientUrl + filter).then(res => {
+            this.setState({ patients: res.data });
+        }).catch((err) => {
+            console.log(err);
+        });
+    }
     getPatients() {
-        Axios.get('http://localhost:3000/Patient').then(res => {
+        Axios.get(patientUrl).then(res => {
             this.setState({ patients: res.data });
         }).catch((err) => {
             console.log(err);
@@ -49,6 +70,28 @@ class App extends Component {
                                 <th scope="col">Email</th>
                                 <th scope="col">Birth Date</th>
                                 <th scope="col">Severity</th>
+                            </tr>
+                            <tr>
+                                <th scope="col"><input type="text"
+                                    className="form-control"
+                                    value={this.state.filterName}
+                                    onChange={this.filterName}
+                                /></th>
+                                <th scope="col"><input type="text"
+                                    className="form-control"
+                                    value={this.state.filterEmail}
+                                    onChange={this.filterEmail}
+                                /></th>
+                                <th scope="col"></th>
+                                <th scope="col"><input type="text"
+                                    className="form-control"
+                                    value={this.state.filterSeverity}
+                                    onChange={this.filterSeverity}
+                                /></th>
+                                <th><button className="form-control"
+                                    onClick={this.filter}>
+                                    Filter
+                                </button></th>
                             </tr>
                         </thead>
                         <tbody>

@@ -44,23 +44,23 @@ passport.use(new LocalStrategy(
             DB = Patient
         }
         DB.findOne({ email: email })
-        .then(user => {
-            if (user) {
-                user.passwordComparison(password).then(passwordsMatch => {
-                    if (passwordsMatch) {
-                        return done(null, user);
-                    }
-                    else {
-                        return done(null, false, { message: 'Incorrect password' });
-                    }
-                });
-            } else {
-                return done(null, false, { message: 'Account not found' });
-            }
-        })
-        .catch(error => {
-            return done(null, false, { message: error });
-        });
+            .then(user => {
+                if (user) {
+                    user.passwordComparison(password).then(passwordsMatch => {
+                        if (passwordsMatch) {
+                            return done(null, user);
+                        }
+                        else {
+                            return done(null, false, { message: 'Incorrect password' });
+                        }
+                    });
+                } else {
+                    return done(null, false, { message: 'Account not found' });
+                }
+            })
+            .catch(error => {
+                return done(null, false, { message: error });
+            });
     }
 ));
 app.use(expressSession({
@@ -133,7 +133,7 @@ router.post('/Patient/register', function (req, res) {
         res.status(400).send(err);
     });
 });
-router.get('/Patient/:id', function (req, res) {
+router.get('/Patient/patient/:id', function (req, res) {
     Patient.findById(req.params.id, (err, patient) => {
         if (patient) {
             res.status(200).json(patient);
@@ -142,7 +142,7 @@ router.get('/Patient/:id', function (req, res) {
         }
     });
 });
-router.put('/Patient/:id', function (req, res) {
+router.put('/Patient/patient/:id', function (req, res) {
     Patient.findById(req.params.id, (err, patient) => {
         if (patient) {
             patient = req.body;
@@ -158,7 +158,7 @@ router.put('/Patient/:id', function (req, res) {
         }
     });
 });
-router.delete('/Patient/:id', function (req, res) {
+router.delete('/Patient/patient/:id', function (req, res) {
     Patient.findByIdAndDelete(req.params.id, (err, File) => {
         if (patient) {
             res.status(200);
@@ -182,6 +182,25 @@ router.get('/Patient', function (req, res) {
         }
         else {
             res.json(patient);
+        }
+    })
+});
+router.get('/Patient/:filter', function (req, res) {
+    let filterJson = JSON.parse(`{${req.params.filter}}`);
+    for (var param in filterJson) {
+        if (filterJson[param] === '') {
+            delete filterJson[param];
+        } else {
+            filterJson[param] = new RegExp(filterJson[param], "i");
+        }
+    }
+    console.log("filterJson", filterJson)
+    Patient.find(filterJson, null, (err, patients) => {
+        if (err) {
+            console.log(err);
+        }
+        else {
+            res.json(patients);
         }
     })
 });
