@@ -194,7 +194,6 @@ router.get('/Patient/:filter', function (req, res) {
             filterJson[param] = new RegExp(filterJson[param], "i");
         }
     }
-    console.log("filterJson", filterJson)
     Patient.find(filterJson, null, (err, patients) => {
         if (err) {
             console.log(err);

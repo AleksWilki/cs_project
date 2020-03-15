@@ -12,6 +12,7 @@ class Patient extends Component {
                 <td> {this.props.patient.email} </td>
                 <td> {this.props.patient.birthDate.substring(0, 10)}</td>
                 <td> {this.props.patient.severity} </td>
+                <td> {this.props.patient.appointmentBooked.toString()} </td>
             </tr>
         )
     }
@@ -24,6 +25,7 @@ class App extends Component {
         this.filterName = this.filterName.bind(this);
         this.filterEmail = this.filterEmail.bind(this);
         this.filterSeverity = this.filterSeverity.bind(this);
+        this.filterAppointment = this.filterAppointment.bind(this);
         this.filter = this.filter.bind(this);
 
         this.state = {
@@ -31,6 +33,7 @@ class App extends Component {
             filterName: '',
             filterEmail: '',
             filterSeverity: '',
+            filterAppointment: ''
         }
     }
     componentDidMount() {
@@ -39,8 +42,9 @@ class App extends Component {
     filterName(e) { this.setState({ filterName: e.target.value }) }
     filterEmail(e) { this.setState({ filterEmail: e.target.value }) }
     filterSeverity(e) { this.setState({ filterSeverity: e.target.value }) }
+    filterAppointment(e) { this.setState({ filterAppointment: e.target.value }) }
     filter() {
-        let filter = `"name":"${this.state.filterName}","email":"${this.state.filterEmail}","severity":"${this.state.filterSeverity}"`;
+        let filter = `"name":"${this.state.filterName}","email":"${this.state.filterEmail}","severity":"${this.state.filterSeverity}","appointmentBooked":"${this.state.filterAppointment}"`;
         Axios.get(patientUrl + filter).then(res => {
             this.setState({ patients: res.data });
         }).catch((err) => {
@@ -70,6 +74,7 @@ class App extends Component {
                                 <th scope="col">Email</th>
                                 <th scope="col">Birth Date</th>
                                 <th scope="col">Severity</th>
+                                <th scope="col">Appointment Booked</th>
                             </tr>
                             <tr>
                                 <th scope="col"><input type="text"
@@ -87,6 +92,11 @@ class App extends Component {
                                     className="form-control"
                                     value={this.state.filterSeverity}
                                     onChange={this.filterSeverity}
+                                /></th>
+                                <th scope="col"><input type="text"
+                                    className="form-control"
+                                    value={this.state.filterAppointment}
+                                    onChange={this.filterAppointment}
                                 /></th>
                                 <th><button className="form-control"
                                     onClick={this.filter}>
