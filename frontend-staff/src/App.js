@@ -27,6 +27,7 @@ class App extends Component {
         this.filterSeverity = this.filterSeverity.bind(this);
         this.filterAppointment = this.filterAppointment.bind(this);
         this.filter = this.filter.bind(this);
+        this.presetAttention = this.presetAttention.bind(this);
 
         this.state = {
             patients: [],
@@ -51,6 +52,15 @@ class App extends Component {
             console.log(err);
         });
     }
+    presetAttention() {
+        this.setState({ filterSeverity: "critical", filterAppointment: true })
+        let filter = `"severity":"critical","appointmentBooked":true`;
+        Axios.get(patientUrl + filter).then(res => {
+            this.setState({ patients: res.data });
+        }).catch((err) => {
+            console.log(err);
+        });
+    }
     getPatients() {
         Axios.get(patientUrl).then(res => {
             this.setState({ patients: res.data });
@@ -67,6 +77,10 @@ class App extends Component {
         return (
             <div className="container">
                 <div>
+                    <button className="form-control"
+                        onClick={this.presetAttention}>
+                        Requires Appointment
+                    </button>
                     <table className="table">
                         <thead>
                             <tr>
@@ -93,11 +107,13 @@ class App extends Component {
                                     value={this.state.filterSeverity}
                                     onChange={this.filterSeverity}
                                 /></th>
-                                <th scope="col"><input type="text"
-                                    className="form-control"
-                                    value={this.state.filterAppointment}
-                                    onChange={this.filterAppointment}
-                                /></th>
+                                <th scope="col"><div>
+                                    <select value={this.state.filterAppointment} onChange={this.filterAppointment}>
+                                        <option value={""}>Either</option>
+                                        <option value={true}>True</option>
+                                        <option value={false}>False</option>
+                                    </select>
+                                </div></th>
                                 <th><button className="form-control"
                                     onClick={this.filter}>
                                     Filter

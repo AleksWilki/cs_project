@@ -190,10 +190,11 @@ router.get('/Patient/:filter', function (req, res) {
     for (var param in filterJson) {
         if (filterJson[param] === '') {
             delete filterJson[param];
-        } else {
+        } else if (typeof filterJson[param] === String){
             filterJson[param] = new RegExp(filterJson[param], "i");
         }
     }
+    console.log(filterJson)
     Patient.find(filterJson, null, (err, patients) => {
         if (err) {
             console.log(err);
