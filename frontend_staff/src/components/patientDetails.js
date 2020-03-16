@@ -3,19 +3,41 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from 'react-router-dom';
 import Axios from 'axios';
 
-const patientUrl = "http://localhost:3000/Patient/";
+
+const Patient = props => (
+            <tr>
+                <td> {props.patient.forname} </td>
+                <td> {props.patient.surname} </td>
+                <td> {props.patient.age} </td>
+                <td> {props.patient.PrevAppoint.substring(0, 10)}</td>
+                <td> {props.patient.NextAppoint.substring(0, 10)}</td>
+                <td> {props.patient.severity} </td> 
+            </tr>
+        )
 class patientDetails extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            patients: [],
-            filterName: '',
-            filterEmail: '',
-            filterSeverity: '',
-            filterAppointment: ''
+            patients: []
         }
     }
+    componentDidMount() {
+        const {id} = this.props.match.params;
+        console.log({id});
+        Axios.get (`http://localhost:3000/Patient/patient/${id}`).then(res => {
+            this.setState({ patients: res.data });
+        }).catch((err) => {
+            console.log(err);
+        });
+    }
+
+    createPatientList() {
+        return this.state.patients.map((patient, index) => {
+            return <Patient patient={patient} key={index} />
+        })
+    }
+
     render() {
         return (
             <div className="container">
@@ -36,6 +58,9 @@ class patientDetails extends Component {
                                             <th>Risk Status</th>
                                         </tr>
                                     </thead>
+                                    <tbody>
+                                        {this.createPatientList()}
+                                    </tbody>
                                 </table>
                             </div>
                         </div>
