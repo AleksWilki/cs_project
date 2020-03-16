@@ -2,6 +2,8 @@
 const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
 
+const Date2 = new Date("<YYYY-mm-dd>");
+
 const patientSchema = new mongoose.Schema({
     registerDate: {
         type: Date,
