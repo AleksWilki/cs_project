@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
-import '../node_modules/font-awesome/css/font-awesome.min.css'; 
-import {BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
+import '../node_modules/font-awesome/css/font-awesome.min.css';
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 import HR from "./components/heartRate";
 import BP from "./components/bloodPreasure";
 import Steps from "./components/stepCounter";
