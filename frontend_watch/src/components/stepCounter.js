@@ -19,7 +19,7 @@ export class stepCounter extends Component {
                     </div>
                     <div className="col-md-4"></div>
                     <div className="col-md-4">
-                        <Link style={linkStyle} to="/sleep"><div style={{ fontSize: "20px", float: "left" }}> Scroll Right on Watch<i className="fa fa-arrow-right fa-3x"></i></div></Link>
+                        <Link style={linkStyle} to="/heart-rate"><div style={{ fontSize: "20px", float: "left" }}> Scroll Right on Watch<i className="fa fa-arrow-right fa-3x"></i></div></Link>
                     </div>
                 </div>
             </div>

@@ -5,7 +5,6 @@ import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 import HR from "./components/heartRate";
 import BP from "./components/bloodPreasure";
 import Steps from "./components/stepCounter";
-import Sleep from "./components/sleep";
 
 class App extends Component {
     render() {
@@ -16,7 +15,6 @@ class App extends Component {
                     <Route path="/heart-rate" component={HR} />
                     <Route path="/blood-preasure" component={BP} />
                     <Route path="/step-counter" component={Steps} />
-                    <Route path="/sleep" component={Sleep} />
                 </div>
             </Router>
         )

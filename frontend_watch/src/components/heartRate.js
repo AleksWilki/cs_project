@@ -15,7 +15,7 @@ export class heartRate extends Component {
                 </div>
                 <div className="row">
                     <div className="col-md-4">
-                        <Link style={linkStyle} to="/sleep"><div style={{ fontSize: "20px", float: "right" }}> <i className="fa fa-arrow-left fa-3x"></i> Scroll Left on Watch</div></Link>
+                        <Link style={linkStyle} to="/step-counter"><div style={{ fontSize: "20px", float: "right" }}> <i className="fa fa-arrow-left fa-3x"></i> Scroll Left on Watch</div></Link>
                     </div>
                     <div className="col-md-4"></div>
                     <div className="col-md-4">
