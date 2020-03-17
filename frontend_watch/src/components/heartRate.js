@@ -4,14 +4,17 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import 'font-awesome/css/font-awesome.min.css';
 
 export class heartRate extends Component {
+    constructor(props) {
+        super(props);
+    }
     render() {
         return (
             <div className="container">
                 <div style={watchStyle}>
                     <i className="fa fa-heart fa-5x"></i>
                     <br></br>
-                    <label style={{ fontSize: "25px" }}>Heart rate is:</label>
-                    <h3 style={{ fontSize: "80px" }}>70</h3>
+                    <label style={{ fontSize: "25px" }}>Heart Rate:</label>
+                    <h3 style={{ fontSize: "80px" }}>{this.props.heartRate}</h3>
                 </div>
                 <div className="row">
                     <div className="col-md-4">

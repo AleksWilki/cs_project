@@ -4,14 +4,17 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import 'font-awesome/css/font-awesome.min.css';
 
 export class bloodPreasure extends Component {
+    constructor(props) {
+        super(props);
+    }
     render() {
         return (
             <div className="container">
                 <div style={watchStyle}>
                     <i className="fa fa-heartbeat fa-5x"></i>
                     <br></br>
-                    <label style={{ fontSize: "25px" }}>Blood Preasure is:</label>
-                    <h3 style={{ fontSize: "50px" }}>140/90</h3>
+                    <label style={{ fontSize: "25px" }}>Latest Blood Preasure:</label>
+                    <h3 style={{ fontSize: "50px" }}>{this.props.bloodPressure.toString()}</h3>
                 </div>
                 <div className="row">
                     <div className="col-md-4">

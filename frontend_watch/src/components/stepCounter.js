@@ -4,14 +4,17 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import 'font-awesome/css/font-awesome.min.css';
 
 export class stepCounter extends Component {
+    constructor(props) {
+        super(props);
+    }
     render() {
         return (
             <div className="container">
                 <div style={watchStyle}>
                     <i className="fa fa-blind fa-5x"></i>
                     <br></br>
-                    <label style={{ fontSize: "25px" }}>Step total is:</label>
-                    <h3 style={{ fontSize: "60px" }}>6578</h3>
+                    <label style={{ fontSize: "25px" }}>Steps Today:</label>
+                    <h3 style={{ fontSize: "60px" }}>{this.props.stepsTaken}</h3>
                 </div>
                 <div className="row">
                     <div className="col-md-4">

@@ -146,12 +146,13 @@ router.put('/Patient/patient/:id', function (req, res) {
     Patient.findById(req.params.id, (err, patient) => {
         if (patient) {
             patient = req.body;
+            console.log(patient)
 
-            patient.save().then(() => {
-                res.status(200).end();
-            }).catch(err => {
-                res.status(400).send(err);
-            });
+            // patient.save().then(() => {
+            //     res.status(200).end();
+            // }).catch(err => {
+            //     res.status(400).send(err);
+            // });
         }
         else {
             res.status(404).end();
