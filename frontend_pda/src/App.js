@@ -18,7 +18,7 @@ class App extends Component {
         return (
             <Router>
                 <div className="container">
-                    <Redirect exact from="/" to="/home" />
+                    <Redirect exact from="/" to="/login" />
                     <Route path="/home" component={Home} />
                     <Route path="/heart-rate" component={HR} />
                     <Route path="/sleep" component={Sleep} />

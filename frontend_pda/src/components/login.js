@@ -1,9 +1,57 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom';
+import axios from 'axios';
 import "bootstrap/dist/css/bootstrap.min.css";
 import 'font-awesome/css/font-awesome.min.css';
 
+const Axios = axios.create({
+    withCredentials: true
+});
+
 export class login extends Component {
+    constructor(props) {
+        super(props);
+
+        this.onChangeEmail = this.onChangeEmail.bind(this);
+        this.onChangePassword = this.onChangePassword.bind(this);
+        this.login = this.login.bind(this);
+
+        this.state = {
+            email: '',
+            password: '',
+        }
+    }
+    onChangeEmail(e) {
+        this.setState({
+            email: e.target.value
+        })
+    }
+    onChangePassword(e) {
+        this.setState({
+            password: e.target.value
+        })
+    }
+    login() {
+        const user = {
+            email: this.state.email,
+            password: this.state.password,
+        }
+
+        Axios.post('http://localhost:3000/Patient/login', user).then(res => {
+            console.log("res1", res)
+            Axios.get('http://localhost:3000/Patient/details').then(res => {
+                this.props.history.push('/home');
+            }).catch(err => {
+                console.log("err", err);
+            })
+        }).catch(err => {
+            console.log("err", err);
+        })
+
+        this.setState({
+            email: '',
+            password: '',
+        })
+    }
     render() {
         return (
             <div className="container">
@@ -11,17 +59,25 @@ export class login extends Component {
                     <div className="row">
                         <div className="col-md-5"><label style={labelStyle}>Enter Username:</label></div>
                         <div className="col-md-4">
-                            <input className="form-control" type="text"></input>
+                            <input type="text"
+                                className="form-control"
+                                value={this.state.email}
+                                onChange={this.onChangeEmail}
+                            />
                         </div>
                     </div>
                     <div className="row">
                         <div className="col-md-5"><label style={labelStyle}>Enter Password:</label></div>
                         <div className="col-md-4">
-                            <input className="form-control" type="password"></input>
+                            <input type="password"
+                                className="form-control"
+                                value={this.state.password}
+                                onChange={this.onChangePassword}
+                            />
                         </div>
                     </div>
                     <div className="row" >
-                        <button type="button" className="btn btn-success" style={buttonStyle}>Login</button>
+                        <button type="button" className="btn btn-success" style={buttonStyle} onClick={this.login}>Login</button>
                     </div>
                 </div>
             </div>
