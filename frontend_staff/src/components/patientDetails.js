@@ -93,7 +93,7 @@ class patientDetails extends Component {
                                     <thead>
                                         <tr>
                                             <th>Heart Rate</th>
-                                            <th>Blood Preasure</th>
+                                            <th>Blood Pressure</th>
                                             <th>Calorie Intake</th>
                                             <th>Alcohol Intake</th>
                                             <th>Steps taken</th>
@@ -102,12 +102,12 @@ class patientDetails extends Component {
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td>{this.state.patient.heartRate}</td>
-                                            <td>{this.state.patient.bloodPreasure}</td>
-                                            <td>{this.state.patient.calorieIntake}</td>
-                                            <td>{this.state.patient.alcoholIntake}</td>
-                                            <td>{this.state.patient.stepsTaken}</td>
-                                            <td>{this.state.patient.timeSlept}</td>
+                                            <td>{this.state.patient.heartRateAverageToday ? this.state.patient.heartRateAverageToday[0] : "0"}</td>
+                                            <td>{this.state.patient.bloodPressureHistory && this.state.patient.bloodPressureHistory[0] ? this.state.patient.bloodPressureHistory[0][0] + ", " + this.state.patient.bloodPressureHistory[0][1] : "0, 0"}</td>
+                                            <td>{this.state.patient.calorieIntakeToday}</td>
+                                            <td>{this.state.patient.alcoholIntakeToday}</td>
+                                            <td>{this.state.patient.stepsTakenToday}</td>
+                                            <td>{this.state.patient.timeSleptToday}</td>
                                         </tr>
                                     </tbody>
                                 </table>
