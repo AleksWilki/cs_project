@@ -9,14 +9,26 @@ import LoginStaff from "./components/loginStaff";
 import RegisterPatient from "./components/registerPatient";
 
 class App extends Component {
+    constructor(props) {
+        super(props);
+
+        this.login = this.login.bind(this);
+
+        this.state = {
+            loggedIn: false,
+        }
+    }
+    login() {
+        this.setState({ loggedIn: true })
+    }
     render() {
         return (
             <Router>
-                <Header />
+                <Header loggedIn={this.state.loggedIn} />
                 <div className="container">
                     <Redirect exact from="/" to="/login-staff" />
                     <Route path="/register-staff" component={RegisterStaff} />
-                    <Route path="/login-staff" component={LoginStaff} />
+                    <Route path="/login-staff" component={(props) => <LoginStaff {...props} login={this.login} />} />
                     <Route path="/register-patient" component={RegisterPatient} />
                     <Route path="/home" component={Home} />
                     <Route path="/patient-details/:id" component={Patient} />

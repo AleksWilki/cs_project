@@ -39,7 +39,7 @@ export class loginStaff extends Component {
 
         Axios.post('http://localhost:3000/Staff/login', user).then(res => {
             console.log("res1", res)
-            this.props.updateUser();
+            this.props.login();
             this.props.history.push('/home');
         }).catch(err => {
             console.log("err", err);
