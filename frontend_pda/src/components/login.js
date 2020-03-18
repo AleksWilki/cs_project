@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom';
 import "bootstrap/dist/css/bootstrap.min.css";
 import 'font-awesome/css/font-awesome.min.css';
-import Axios from 'axios';
 
 export class login extends Component {
     render() {
@@ -22,7 +21,7 @@ export class login extends Component {
                         </div>
                     </div>
                     <div className="row" >
-                        <button type="button" class="btn btn-success" style={buttonStyle}>Login</button>
+                        <button type="button" className="btn btn-success" style={buttonStyle}>Login</button>
                     </div>
                 </div>
             </div>

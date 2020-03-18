@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom';
 import "bootstrap/dist/css/bootstrap.min.css";
 import 'font-awesome/css/font-awesome.min.css';
-import Axios from 'axios';
 
 export class sleep extends Component {
     render() {
@@ -14,9 +13,6 @@ export class sleep extends Component {
                         <div className="col-md-4">
                             <label style={{ fontSize: "20px" }}>Most recent sleep pattern is:</label><br></br>
                             <h3 style={{ fontSize: "30px" }}>11pm -> 8am</h3>
-                        </div>
-                        <div className="col-md-4">
-                            <button type="button" class="btn btn-success" style={buttonStyle}><i class="fa fa-check fa-3x"></i> </button>
                         </div>
                     </div>
                 </div>
@@ -39,12 +35,6 @@ const pdaStyle = {   // Css styling for the form
     padding: "30px",
     paddingTop: "150px"
 }
-
-const buttonStyle = {
-    height: "150px",
-    width: "150px"
-}
-
 const linkStyle = {
     color: '#000',
     textDecoration: 'none'

@@ -19,13 +19,13 @@ class App extends Component {
             <Router>
                 <div className="container">
                     <Route path="/home" component={Home} />
-                    <Route path="/heart-rate/5e6c9247bee9cc271cbf3e22" component={HR} />
-                    <Route path="/sleep/5e6c9247bee9cc271cbf3e22" component={Sleep} />
-                    <Route path="/blood-preasure/5e6c9247bee9cc271cbf3e22" component={BP} />
-                    <Route path="/step-counter/5e6c9247bee9cc271cbf3e22" component={Steps} />
-                    <Route path="/drink-intake/5e6c9247bee9cc271cbf3e22" component={Drink} />
-                    <Route path="/food-intake/5e6c9247bee9cc271cbf3e22" component={Food} />
-                    <Route path="/login/5e6c9247bee9cc271cbf3e22" component={Login} />
+                    <Route path="/heart-rate" component={HR} />
+                    <Route path="/sleep" component={Sleep} />
+                    <Route path="/blood-preasure" component={BP} />
+                    <Route path="/step-counter" component={Steps} />
+                    <Route path="/drink-intake" component={Drink} />
+                    <Route path="/food-intake" component={Food} />
+                    <Route path="/login" component={Login} />
                 </div>
             </Router>
         )

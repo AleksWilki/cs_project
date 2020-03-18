@@ -17,7 +17,7 @@ export class drinkIntake extends Component {
                             </select>
                         </div>
                         <div className="col-md-4">
-                            <button type="button" class="btn btn-success" style={buttonStyle}><i class="fa fa-check fa-3x"></i> </button>
+                            <button type="button" className="btn btn-success" style={buttonStyle}><i className="fa fa-check fa-3x"></i> </button>
                         </div>
                     </div>
                 </div>
@@ -40,15 +40,13 @@ const pdaStyle = {   // Css styling for the form
     padding: "30px",
     paddingTop: "150px"
 }
-
-const buttonStyle = {
-    height: "150px",
-    width: "150px"
-}
-
 const linkStyle = {
     color: '#000',
     textDecoration: 'none'
+}
+const buttonStyle = {
+    height: "150px",
+    width: "150px"
 }
 
 export default drinkIntake
