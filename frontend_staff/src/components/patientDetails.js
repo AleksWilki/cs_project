@@ -26,7 +26,7 @@ class patientDetails extends Component {
             <div className="container">
                 <br></br>
                 <div className="card card-default">
-                    <div className="card-header"><strong>Patient Name here</strong></div>
+                    <div className="card-header"><strong>{this.state.patient.name + "'s Details"}</strong></div>
                     <div className="card-body">
                         <div className="row">
                             <div className="col-md-12">
