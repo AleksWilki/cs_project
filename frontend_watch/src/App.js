@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 import HR from "./components/heartRate";
 import BP from "./components/bloodPreasure";
 import Steps from "./components/stepCounter";
+import Login from "./components/login";
 
 const Axios = axios.create({
     withCredentials: true
@@ -29,9 +30,7 @@ class App extends Component {
             stepsTaken: 0,
             heartRate: 0,
             bloodPressure: [0, 0],
-            interval: setInterval(this.onInterval, 3000),
-            email: '',
-            password: '',
+            interval: {},
         }
     }
     postSleep() {
@@ -87,20 +86,11 @@ class App extends Component {
         })
     }
     login() {
-        const user = {
-            email: this.state.email,
-            password: this.state.password,
-        }
-
-        Axios.post('http://localhost:3000/Patient/login', user).then(res => {
-            console.log("res1", res)
-            Axios.get('http://localhost:3000/Patient/details').then(res => {
-                console.log("res2", res)
-                this.setState({
-                    userId: res.data._id
-                })
-            }).catch(err => {
-                console.log("err", err);
+        Axios.get('http://localhost:3000/Patient/details').then(res => {
+            console.log("res2", res)
+            this.setState({
+                userId: res.data._id,
+                interval: setInterval(this.onInterval, 3000),
             })
         }).catch(err => {
             console.log("err", err);
@@ -115,37 +105,13 @@ class App extends Component {
         return (
             <Router>
                 <div className="container">
-                    <Redirect exact from="/" to="/heart-rate" />
+                    <Redirect exact from="/" to="/login" />
+                    <Route path="/login" component={(props) => <Login {...props} login={this.login} />} />
                     <Route path="/heart-rate" component={(props) => <HR {...props} heartRate={this.state.heartRate} />} />
                     <Route path="/blood-preasure" component={(props) => <BP {...props} bloodPressure={this.state.bloodPressure} />} />
                     <Route path="/step-counter" component={(props) => <Steps {...props} stepsTaken={this.state.stepsTaken} />} />
                     <button className="col-md-4" onClick={this.postSleep}>Patient Wakes up</button>
                     <button className="col-md-4" onClick={this.sendBloodPressure}>Take Blood Pressure</button>
-                    <div>
-                        <div className="row">
-                            <div className="col-md-5"><label>Enter Username:</label></div>
-                            <div className="col-md-4">
-                                <input type="text"
-                                    className="form-control"
-                                    value={this.state.email}
-                                    onChange={this.onChangeEmail}
-                                />
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="col-md-5"><label>Enter Password:</label></div>
-                            <div className="col-md-4">
-                                <input type="password"
-                                    className="form-control"
-                                    value={this.state.password}
-                                    onChange={this.onChangePassword}
-                                />
-                            </div>
-                        </div>
-                        <div className="row" >
-                            <button type="button" className="btn btn-success" onClick={this.login}>Set connection</button>
-                        </div>
-                    </div>
                 </div>
             </Router>
         )
