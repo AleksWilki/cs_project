@@ -8,7 +8,9 @@ export class Header extends Component {
             <div style={headerStyle}>
                 <h1>Staff Patient Detail Viewer</h1>
                 <Link to="/home" style={linkStyle}> Home</Link> | 
-
+                <Link to="/register-staff" style={linkStyle}> register staff </Link> | 
+                <Link to="/login-staff" style={linkStyle}> staff login </Link> | 
+                <Link to="/register-patient" style={linkStyle}> register patient</Link>
             </div>
         )
     }
@@ -18,9 +20,9 @@ const headerStyle = {   // styling for links
     color: '#fff',
     textAlign: 'center',
     padding: '10px'
-    }
-    const linkStyle={
+}
+const linkStyle = {
     color: '#f0f0f0',
-    textDecoration:'none'
-    }
-    export default Header;
+    textDecoration: 'none'
+}
+export default Header;
