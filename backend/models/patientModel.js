@@ -24,6 +24,14 @@ const patientSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    phoneNumber: {
+        type: String,
+        required: true,
+    },
+    allergies: {
+        type: String,
+        required: true,
+    },
     birthDate: {
         type: Date,
         required: true

@@ -16,6 +16,8 @@ export class registerPatient extends Component {
         this.onChangePassword = this.onChangePassword.bind(this);
         this.onChangeSymptoms = this.onChangeSymptoms.bind(this);
         this.onChangeBirthdate = this.onChangeBirthdate.bind(this);
+        this.onChangeAllergies = this.onChangeAllergies.bind(this);
+        this.onChangePhone = this.onChangePhone.bind(this);
         this.register = this.register.bind(this);
 
         this.state = {
@@ -24,6 +26,8 @@ export class registerPatient extends Component {
             password: '',
             symptoms: '',
             birthdate: {},
+            allergies: '',
+            phone: '',
         }
     }
     onChangeName(e) {
@@ -51,6 +55,16 @@ export class registerPatient extends Component {
             birthdate: e.target.value
         })
     }
+    onChangeAllergies(e) {
+        this.setState({
+            allergies: e.target.value
+        })
+    }
+    onChangePhone(e) {
+        this.setState({
+            phone: e.target.value
+        })
+    }
     register() {
         console.log("here")
         const user = {
@@ -59,6 +73,8 @@ export class registerPatient extends Component {
             name: this.state.name,
             birthDate: this.state.birthdate,
             symptoms: this.state.symptoms,
+            allergies: this.state.allergies,
+            phoneNumber: this.state.phone,
         }
 
         Axios.post('http://localhost:3000/Patient/register', user).then(res => {
@@ -75,6 +91,8 @@ export class registerPatient extends Component {
             password: '',
             symptoms: '',
             birthdate: {},
+            allergies: '',
+            phone: '',
         })
     }
     render() {
@@ -118,6 +136,26 @@ export class registerPatient extends Component {
                                 className="form-control"
                                 value={this.state.symptoms}
                                 onChange={this.onChangeSymptoms}
+                            />
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-md-5"><label style={labelStyle}>Allergies:</label></div>
+                        <div className="col-md-4">
+                            <input type="text"
+                                className="form-control"
+                                value={this.state.allergies}
+                                onChange={this.onChangeAllergies}
+                            />
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-md-5"><label style={labelStyle}>Phone Number:</label></div>
+                        <div className="col-md-4">
+                            <input type="text"
+                                className="form-control"
+                                value={this.state.phone}
+                                onChange={this.onChangePhone}
                             />
                         </div>
                     </div>

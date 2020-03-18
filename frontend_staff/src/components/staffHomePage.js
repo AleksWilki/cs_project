@@ -9,7 +9,7 @@ class Patient extends Component {
     render() {
         return (
             <tr>
-                <td> {this.props.patient.forname} </td>
+                <td> {this.props.patient.name} </td>
                 <td> {this.props.patient.email} </td>
                 <td> {this.props.patient.birthDate ? this.props.patient.birthDate.substring(0, 10) : ""}</td>
                 <td> {this.props.patient.severity} </td>
