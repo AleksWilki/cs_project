@@ -102,12 +102,12 @@ class patientDetails extends Component {
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td>{this.state.patient.heartRateAverageToday ? this.state.patient.heartRateAverageToday[0] : "0"}</td>
+                                            <td>{this.state.patient.heartRateAverageToday ? Math.round(this.state.patient.heartRateAverageToday[0] * 10) / 10 : "0"}</td>
                                             <td>{this.state.patient.bloodPressureHistory && this.state.patient.bloodPressureHistory[0] ? this.state.patient.bloodPressureHistory[0][0] + ", " + this.state.patient.bloodPressureHistory[0][1] : "0, 0"}</td>
                                             <td>{this.state.patient.calorieIntakeToday}</td>
                                             <td>{this.state.patient.alcoholIntakeToday}</td>
                                             <td>{this.state.patient.stepsTakenToday}</td>
-                                            <td>{this.state.patient.timeSleptToday}</td>
+                                            <td>{Math.round((this.props.sleep / 60) * 10) / 10}</td>
                                         </tr>
                                     </tbody>
                                 </table>
