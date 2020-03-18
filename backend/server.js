@@ -14,8 +14,10 @@ const LocalStrategy = require('passport-local').Strategy;
 const Staff = require('./models/staffModel');
 const Patient = require('./models/patientModel');
 const schedule = require('node-schedule');
+const cookieParser = require('cookie-parser');
+const expressSession = require('express-session');
 
-schedule.scheduleJob({ hour: 06, minute: 06 }, () => {
+schedule.scheduleJob({ hour: 00, minute: 00 }, () => {
     Patient.find({}).then(function (patients) {
         patients.forEach(function (patient) {
             console.log(patient)
@@ -237,10 +239,20 @@ router.get('/Patient/:filter', function (req, res) {
 });
 
 // Middleware
+app.use(cookieParser("cs_proj_1"));
+app.use(expressSession({
+    secret: "cs_proj_1",
+    cookie: {
+        expires: new Date(2147483647000) // expire far in the future
+    },
+    resave: false,
+    saveUninitialized: false
+}));
+
 app.use(bodyParser.json());
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(cors({ credentials: true }));
+app.use(cors({ credentials: true, origin: new RegExp(/$http:\/\/localhost:300/, 'i') }));
 app.use('/', router);
 app.set("port", process.env.PORT || port);
 app.use(express.json());
