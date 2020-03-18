@@ -7,7 +7,7 @@ const Axios = axios.create({
     withCredentials: true
 });
 
-export class login extends Component {
+export class loginStaff extends Component {
     constructor(props) {
         super(props);
 
@@ -37,7 +37,7 @@ export class login extends Component {
             password: this.state.password,
         }
 
-        Axios.post('http://localhost:3000/Patient/login', user).then(res => {
+        Axios.post('http://localhost:3000/Staff/login', user).then(res => {
             console.log("res1", res)
             this.props.updateUser();
             this.props.history.push('/home');
@@ -75,7 +75,7 @@ export class login extends Component {
                         </div>
                     </div>
                     <div className="row" >
-                        <button type="button" className="btn btn-success" style={buttonStyle} onClick={this.login}>Login</button>
+                        <button type="button" className="btn btn-success" style={buttonStyle} onClick={this.login}>Staff Login</button>
                     </div>
                 </div>
             </div>
@@ -105,4 +105,4 @@ const labelStyle = {
     float: "right"
 }
 
-export default login
+export default loginStaff

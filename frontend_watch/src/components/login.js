@@ -39,8 +39,8 @@ export class login extends Component {
 
         Axios.post('http://localhost:3000/Patient/login', user).then(res => {
             console.log("res1", res)
-            this.props.updateUser();
-            this.props.history.push('/home');
+            this.props.login();
+            this.props.history.push('/heart-rate');
         }).catch(err => {
             console.log("err", err);
         })
@@ -75,7 +75,7 @@ export class login extends Component {
                         </div>
                     </div>
                     <div className="row" >
-                        <button type="button" className="btn btn-success" style={buttonStyle} onClick={this.login}>Login</button>
+                        <button type="button" className="btn btn-success" style={buttonStyle} onClick={this.login}>Connect</button>
                     </div>
                 </div>
             </div>

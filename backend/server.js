@@ -14,8 +14,9 @@ const LocalStrategy = require('passport-local').Strategy;
 const Staff = require('./models/staffModel');
 const Patient = require('./models/patientModel');
 const schedule = require('node-schedule');
+const cookieParser = require('cookie-parser');
 
-schedule.scheduleJob({ hour: 06, minute: 06 }, () => {
+schedule.scheduleJob({ hour: 00, minute: 00 }, () => {
     Patient.find({}).then(function (patients) {
         patients.forEach(function (patient) {
             console.log(patient)
@@ -37,9 +38,10 @@ passport.serializeUser(function (user, done) {
 passport.deserializeUser(
     function (req, id, done) {
         var DB;
-        if (req.url === "/Staff/logout") {
+        console.log("url",req.url)
+        if (req.url.includes("/Staff/")) {
             DB = Staff;
-        } else if (req.url === "/Patient/logout") {
+        } else if (req.url.includes("/Patient/")) {
             DB = Patient
         }
         DB.findById(id, function (err, user) {
@@ -54,9 +56,9 @@ passport.use(new LocalStrategy(
     },
     function (req, email, password, done) {
         var DB;
-        if (req.url === "/Staff/login") {
+        if (req.url.includes("/Staff/")) {
             DB = Staff;
-        } else if (req.url === "/Patient/login") {
+        } else if (req.url.includes("/Patient/")) {
             DB = Patient
         }
         DB.findOne({ email: email })
@@ -87,6 +89,27 @@ app.use(expressSession({
     resave: false,
     saveUninitialized: false
 }));
+const getPatientDetails = function (req) {
+    return new Promise(function (resolve, reject) {
+        if (req.isAuthenticated()) {
+            let details = req.user
+            details.password = undefined
+            details.authenticated = true
+            console.log("details:", details)
+            resolve(details);
+        } else {
+            let details = { 'authenticated': false };
+            console.log("details:", details)
+            resolve(details);
+        }
+    })
+}
+
+router.get('/Patient/details', function (req, res) {
+    getPatientDetails(req).then(details => {
+        res.json(details)
+    })
+});
 
 // Staff Routes
 router.post('/Staff/register', function (req, res) {
@@ -217,6 +240,7 @@ router.get('/Patient', function (req, res) {
     })
 });
 router.get('/Patient/:filter', function (req, res) {
+    console.log("here?")
     let filterJson = JSON.parse(`{${req.params.filter}}`);
     for (var param in filterJson) {
         if (filterJson[param] === '') {
@@ -237,10 +261,20 @@ router.get('/Patient/:filter', function (req, res) {
 });
 
 // Middleware
+app.use(cookieParser("cs_proj_1"));
+app.use(expressSession({
+    secret: "cs_proj_1",
+    cookie: {
+        expires: new Date(2147483647000) // expire far in the future
+    },
+    resave: false,
+    saveUninitialized: false
+}));
+
 app.use(bodyParser.json());
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(cors({ credentials: true }));
+app.use(cors({ credentials: true, origin: new RegExp(/http:\/\/localhost:300[0-9]/, 'i') }));
 app.use('/', router);
 app.set("port", process.env.PORT || port);
 app.use(express.json());

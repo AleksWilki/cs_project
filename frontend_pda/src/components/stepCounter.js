@@ -11,8 +11,8 @@ export class stepCounter extends Component {
                     <div className="row">
                         <div className="col-md-4"><i className="fa fa-blind fa-5x"></i></div>
                         <div className="col-md-4">
-                            <label style={{ fontSize: "25px" }}>Most recent step Total is:</label><br></br>
-                            <h3 style={{ fontSize: "80px" }}>6734</h3>
+                            <label style={{ fontSize: "25px" }}>Steps Taken Today:</label><br></br>
+                            <h3 style={{ fontSize: "80px" }}>{this.props.steps}</h3>
                         </div>
                     </div>
                 </div>

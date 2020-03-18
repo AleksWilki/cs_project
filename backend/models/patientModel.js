@@ -12,25 +12,33 @@ const patientSchema = new mongoose.Schema({
     },
     email: {
         type: String,
-        //required: true,
+        required: true,
         lowercase: true,
         unique: true
     },
     password: {
         type: String,
-        //required: true
+        required: true
     },
     name: {
         type: String,
-        //required: true,
+        required: true,
+    },
+    phoneNumber: {
+        type: String,
+        required: true,
+    },
+    allergies: {
+        type: String,
+        required: true,
     },
     birthDate: {
         type: Date,
-        //required: true
+        required: true
     },
     symptoms: {
         type: Array,
-        //required: true
+        required: true
     },
     severity: {
         type: String,

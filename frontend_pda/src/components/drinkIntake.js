@@ -30,7 +30,7 @@ export class drinkIntake extends Component {
                 alcohol: this.state.caloriesAlcohol[1]
             }
             console.log(updates)
-            Axios.put(`http://localhost:3000/Patient/patient/5e6c9247bee9cc271cbf3e22`, updates);
+            Axios.put(`http://localhost:3000/Patient/patient/${this.props.userId}`, updates);
         }
     }
     render() {

@@ -9,12 +9,12 @@ class Patient extends Component {
     render() {
         return (
             <tr>
-                <td> {this.props.patient.forname} </td>
+                <td> {this.props.patient.name} </td>
                 <td> {this.props.patient.email} </td>
-                <td> {this.props.patient.birthDate.substring(0, 10)}</td>
+                <td> {this.props.patient.birthDate ? this.props.patient.birthDate.substring(0, 10) : ""}</td>
                 <td> {this.props.patient.severity} </td>
                 <td> {this.props.patient.appointmentBooked.toString()} </td>
-                <td> <Link to={"/patient-details/" + this.props.patient._id}> Details</Link></td> 
+                <td> <Link to={"/patient-details/" + this.props.patient._id}> Details</Link></td>
             </tr>
         )
     }
@@ -80,10 +80,12 @@ class staffHomePage extends Component {
             <div className="container">
                 <br></br>
                 <div>
-                    <button className="btn btn-warning" 
+                    <button className="btn btn-warning"
                         onClick={this.presetAttention}>
                         Requires Appointment
                     </button>
+
+                    <Link to="/register-patient"> Register Patient </Link>
 
                     <table className="table table-striped">
                         <thead>

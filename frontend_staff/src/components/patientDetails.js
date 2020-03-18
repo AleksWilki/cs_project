@@ -8,55 +8,14 @@ class patientDetails extends Component {
         super(props);
 
         this.state = {
-            forname: '',
-            surname: '',
-            email: '',
-            birthDate: '',
-            severity: '',
-            appointmentBooked: '',
-            age: '',
-            PrevAppoint: '',
-            NextAppoint: '',
-            MonitorReas: '',
-            Allergies: '',
-            HomePhone: '',
-            Mobile: '',
-            registerDate: '',
-            symptoms: [],
-            heartRate: [],
-            bloodPreasure: [],
-            calorieIntake: [],
-            alcoholIntake: [],
-            stepsTaken: [],
-            timeSlept: [],
-
+            patient: {}
         }
     }
     componentDidMount() {
-        const {id} = this.props.match.params;
-        console.log({id});
-        Axios.get (`http://localhost:3000/Patient/patient/${id}`).then(res => {
-            this.setState({forname: res.data.forname,
-            surname: res.data.surname,
-            email: res.data.email,
-            birthDate: res.data.birthDate,
-            severity: res.data.severity,
-            appointmentBooked: res.data.appointmentBooked,
-            age: res.data.age,
-            PrevAppoint: res.data.PrevAppoint,
-            NextAppoint: res.data.NextAppoint,
-            MonitorReas: res.data.MonitorReas,
-            Allergies: res.data.Allergies,
-            HomePhone: res.data.HomePhone,
-            Mobile: res.data.Mobile,
-            registerDate: res.data.registerDate,
-            symptoms: res.data.symptoms,
-            heartRate: res.data.heartRate,
-            bloodPreasure: res.data.bloodPreasure,
-            calorieIntake: res.data.calorieIntake,
-            alcoholIntake: res.data.alcoholIntake,
-            stepsTaken: res.data.stepsTaken,
-            timeSlept: res.data.timeSlept});
+        const { id } = this.props.match.params;
+        console.log({ id });
+        Axios.get(`http://localhost:3000/Patient/patient/${id}`).then(res => {
+            this.setState({ patient: res.data });
         }).catch((err) => {
             console.log(err);
         });
@@ -74,24 +33,22 @@ class patientDetails extends Component {
                                 <table className="table table-striped">
                                     <thead>
                                         <tr>
-                                            <th>Forname</th>
-                                            <th>Surname</th>
-                                            <th>Age</th>
-                                            <th>Prev Appt date</th>
+                                            <th>Full Name</th>
+                                            <th>Birth Date</th>
+                                            <th>Appointment Booked</th>
                                             <th>Next Appt Date</th>
-                                            <th>Risk Status</th>
+                                            <th>Risk Severity</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td>{this.state.forname}</td>
-                                            <td>{this.state.surname}</td>
-                                            <td>{this.state.age}</td>
-                                            <td>{this.state.PrevAppoint}</td>
-                                            <td>{this.state.NextAppoint}</td>
-                                            <td>{this.state.severity}</td>
+                                            <td>{this.state.patient.name}</td>
+                                            <td>{this.state.patient.birthDate ? this.state.patient.birthDate.substring(0, 10) : ""}</td>
+                                            <td>{this.state.patient.appointmentBooked ? "yes" : "no"}</td>
+                                            <td>{this.state.patient.appointmentDate}</td>
+                                            <td>{this.state.patient.severity}</td>
                                         </tr>
-                                        
+
                                     </tbody>
                                 </table>
                             </div>
@@ -101,14 +58,14 @@ class patientDetails extends Component {
                                 <table className="table table-striped">
                                     <thead>
                                         <tr>
-                                            <th>Reasons for Monitor</th>
+                                            <th>Symptoms</th>
                                             <th>Allergies</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td>{this.state.MonitorReas}</td>
-                                            <td>{this.state.Allergies}</td>
+                                            <td>{this.state.patient.symptoms}</td>
+                                            <td>{this.state.patient.allergies}</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -117,16 +74,14 @@ class patientDetails extends Component {
                                 <table className="table table-striped">
                                     <thead>
                                         <tr>
-                                            <th>Home Phone</th>
-                                            <th>Mobile</th>
+                                            <th>Phone Number</th>
                                             <th>Email</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td>{this.state.HomePhone}</td>
-                                            <td>{this.state.Mobile}</td>
-                                            <td>{this.state.email}</td>
+                                            <td>{this.state.patient.phoneNumber}</td>
+                                            <td>{this.state.patient.email}</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -137,9 +92,8 @@ class patientDetails extends Component {
                                 <table className="table table-striped">
                                     <thead>
                                         <tr>
-                                            <th>Symptoms</th>
                                             <th>Heart Rate</th>
-                                            <th>Blood Preasure</th>
+                                            <th>Blood Pressure</th>
                                             <th>Calorie Intake</th>
                                             <th>Alcohol Intake</th>
                                             <th>Steps taken</th>
@@ -148,18 +102,17 @@ class patientDetails extends Component {
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td>{this.state.symptoms}</td>
-                                            <td>{this.state.heartRate}</td>
-                                            <td>{this.state.bloodPreasure}</td>
-                                            <td>{this.state.calorieIntake}</td>
-                                            <td>{this.state.alcoholIntake}</td>
-                                            <td>{this.state.stepsTaken}</td>
-                                            <td>{this.state.timeSlept}</td>
+                                            <td>{this.state.patient.heartRateAverageToday ? this.state.patient.heartRateAverageToday[0] : "0"}</td>
+                                            <td>{this.state.patient.bloodPressureHistory && this.state.patient.bloodPressureHistory[0] ? this.state.patient.bloodPressureHistory[0][0] + ", " + this.state.patient.bloodPressureHistory[0][1] : "0, 0"}</td>
+                                            <td>{this.state.patient.calorieIntakeToday}</td>
+                                            <td>{this.state.patient.alcoholIntakeToday}</td>
+                                            <td>{this.state.patient.stepsTakenToday}</td>
+                                            <td>{this.state.patient.timeSleptToday}</td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
-                        </div>                    
+                        </div>
                     </div>
                 </div>
                 <div style={backBtn}>

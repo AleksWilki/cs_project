@@ -7,18 +7,27 @@ const Axios = axios.create({
     withCredentials: true
 });
 
-export class login extends Component {
+export class registerStaff extends Component {
     constructor(props) {
         super(props);
 
+        this.onChangeName = this.onChangeName.bind(this);
         this.onChangeEmail = this.onChangeEmail.bind(this);
         this.onChangePassword = this.onChangePassword.bind(this);
-        this.login = this.login.bind(this);
+        this.register = this.register.bind(this);
 
         this.state = {
+            name: '',
             email: '',
             password: '',
+            symptoms: '',
+            birthdate: {},
         }
+    }
+    onChangeName(e) {
+        this.setState({
+            name: e.target.value
+        })
     }
     onChangeEmail(e) {
         this.setState({
@@ -30,14 +39,14 @@ export class login extends Component {
             password: e.target.value
         })
     }
-    login() {
+    register() {
         console.log("here")
         const user = {
             email: this.state.email,
             password: this.state.password,
         }
 
-        Axios.post('http://localhost:3000/Patient/login', user).then(res => {
+        Axios.post('http://localhost:3000/Staff/register', user).then(res => {
             console.log("res1", res)
             this.props.updateUser();
             this.props.history.push('/home');
@@ -46,6 +55,7 @@ export class login extends Component {
         })
 
         this.setState({
+            name: '',
             email: '',
             password: '',
         })
@@ -53,9 +63,19 @@ export class login extends Component {
     render() {
         return (
             <div className="container">
-                <div style={pdaStyle}>
+                <div>
                     <div className="row">
-                        <div className="col-md-5"><label style={labelStyle}>Enter Username:</label></div>
+                        <div className="col-md-5"><label style={labelStyle}>Name:</label></div>
+                        <div className="col-md-4">
+                            <input type="text"
+                                className="form-control"
+                                value={this.state.name}
+                                onChange={this.onChangeName}
+                            />
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-md-5"><label style={labelStyle}>Email:</label></div>
                         <div className="col-md-4">
                             <input type="text"
                                 className="form-control"
@@ -65,7 +85,7 @@ export class login extends Component {
                         </div>
                     </div>
                     <div className="row">
-                        <div className="col-md-5"><label style={labelStyle}>Enter Password:</label></div>
+                        <div className="col-md-5"><label style={labelStyle}>Password:</label></div>
                         <div className="col-md-4">
                             <input type="password"
                                 className="form-control"
@@ -75,22 +95,12 @@ export class login extends Component {
                         </div>
                     </div>
                     <div className="row" >
-                        <button type="button" className="btn btn-success" style={buttonStyle} onClick={this.login}>Login</button>
+                        <button type="button" className="btn btn-success" style={buttonStyle} onClick={this.register}>Register Staff</button>
                     </div>
                 </div>
             </div>
         )
     }
-}
-
-const pdaStyle = {   // Css styling for the form
-    margin: "0 auto",
-    textAlign: 'center',
-    height: "450px",
-    width: "800px",
-    border: "10px solid black",
-    padding: "30px",
-    paddingTop: "150px"
 }
 
 const buttonStyle = {
@@ -105,4 +115,4 @@ const labelStyle = {
     float: "right"
 }
 
-export default login
+export default registerStaff
