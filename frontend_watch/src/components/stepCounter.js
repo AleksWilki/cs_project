@@ -10,16 +10,16 @@ export class stepCounter extends Component {
                 <div style={watchStyle}>
                     <i className="fa fa-blind fa-5x"></i>
                     <br></br>
-                    <label style={{fontSize: "25px"}}>Step total is:</label>
-                    <h3 style={{fontSize: "60px"}}>6578</h3>
+                    <label style={{ fontSize: "25px" }}>Steps Today:</label>
+                    <h3 style={{ fontSize: "60px" }}>{this.props.stepsTaken}</h3>
                 </div>
                 <div className="row">
                     <div className="col-md-4">
-                        <Link style={linkStyle} to="/blood-preasure"><div style={{fontSize: "20px", float: "right"}}> <i className="fa fa-arrow-left fa-3x"></i> Scroll Left on Watch</div></Link>
+                        <Link style={linkStyle} to="/blood-preasure"><div style={{ fontSize: "20px", float: "right" }}> <i className="fa fa-arrow-left fa-3x"></i> Scroll Left on Watch</div></Link>
                     </div>
                     <div className="col-md-4"></div>
                     <div className="col-md-4">
-                        <Link style={linkStyle} to="/sleep"><div style={{fontSize: "20px", float: "left"}}> Scroll Right on Watch<i className="fa fa-arrow-right fa-3x"></i></div></Link>
+                        <Link style={linkStyle} to="/heart-rate"><div style={{ fontSize: "20px", float: "left" }}> Scroll Right on Watch<i className="fa fa-arrow-right fa-3x"></i></div></Link>
                     </div>
                 </div>
             </div>
@@ -35,12 +35,11 @@ const watchStyle = {   // Css styling for the form
     border: "10px solid black",
     padding: "30px",
     paddingTop: "30px"
- 
-     }
+}
 
-const linkStyle={
+const linkStyle = {
     color: '#000',
-    textDecoration:'none'
-    }
+    textDecoration: 'none'
+}
 
 export default stepCounter

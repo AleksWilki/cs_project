@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom';
 import "bootstrap/dist/css/bootstrap.min.css";
-import 'font-awesome/css/font-awesome.min.css'; 
-import Axios from 'axios';
+import 'font-awesome/css/font-awesome.min.css';
 
 export class login extends Component {
     render() {
@@ -22,7 +21,7 @@ export class login extends Component {
                         </div>
                     </div>
                     <div className="row" >
-                    <button type="button" class="btn btn-success" style={buttonStyle}>Login</button>
+                        <button type="button" className="btn btn-success" style={buttonStyle}>Login</button>
                     </div>
                 </div>
             </div>
@@ -38,17 +37,16 @@ const pdaStyle = {   // Css styling for the form
     border: "10px solid black",
     padding: "30px",
     paddingTop: "150px"
- 
-     }
- 
- const buttonStyle={
-     height: "150px",
-     width: "150px",
-     fontSize: "30px",
-     margin: "auto"
-     }
+}
 
-const labelStyle={
+const buttonStyle = {
+    height: "150px",
+    width: "150px",
+    fontSize: "30px",
+    margin: "auto"
+}
+
+const labelStyle = {
     fontSize: "30px",
     float: "right"
 }

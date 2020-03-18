@@ -7,73 +7,97 @@ const Date2 = new Date("<YYYY-mm-dd>");
 const patientSchema = new mongoose.Schema({
     registerDate: {
         type: Date,
-        required: true,
+        //required: true,
         default: Date.now
     },
     email: {
         type: String,
-        required: true,
+        //required: true,
         lowercase: true,
         unique: true
     },
     password: {
         type: String,
-        required: true
+        //required: true
     },
     name: {
         type: String,
-        required: true,
+        //required: true,
     },
     birthDate: {
         type: Date,
-        required: true
+        //required: true
     },
-
     symptoms: {
         type: Array,
-        required: true,
+        //required: true
     },
     severity: {
         type: String,
-        required: true,
+        default: "none",
     },
     appointmentBooked: {
         type: Boolean,
-        required: true,
+        default: false
     },
     appointmentDate: {
         type: Date,
-        required: false,
     },
 
-    heartRate: {
+    latestHeartRate: {
+        type: Number,
+        default: 0
+    },
+    heartRatePeakToday: {
+        type: Number,
+    },
+    heartRateAverageToday: {
         type: Array,
-        required: true,
+        default: [0, 0, 0]
+    },
+    heartRateAverageHistory: {
+        type: Array,
         default: []
     },
-    bloodPressure: {
+
+    bloodPressureHistory: {
         type: Array,
-        required: true,
         default: []
     },
-    calorieIntake: {
+
+    calorieIntakeToday: {
+        type: Number,
+        default: 0
+    },
+    calorieIntakeHistory: {
         type: Array,
-        required: true,
         default: []
     },
-    alcoholIntake: {
+
+    alcoholIntakeToday: {
+        type: Number,
+        default: 0
+    },
+    alcoholIntakeHistory: {
         type: Array,
-        required: true,
         default: []
     },
-    stepsTaken: {
+
+    stepsTakenToday: {
+        type: Number,
+        default: 0
+    },
+    stepsTakenHistory: {
         type: Array,
-        required: true,
         default: []
     },
-    timeSlept: {
+
+    timeSleptToday: {
+        type: Number,
+        default: 0
+    },
+    timeSleptHistory: {
         type: Array,
-        required: true,
         default: []
     },
 });
@@ -82,9 +106,9 @@ patientSchema.pre("save", function (next) {
     // Ensure password is not double hashed when unmodifier
     if (!patient.isModified('password')) return next();
 
-    bcrypt.genSalt(10, function(err, salt) {
+    bcrypt.genSalt(10, function (err, salt) {
         if (err) return next(err);
-        bcrypt.hash(patient.password, salt, function(err, hash) {
+        bcrypt.hash(patient.password, salt, function (err, hash) {
             if (err) return next(err);
             patient.password = hash;
             next();

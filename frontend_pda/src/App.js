@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
-import '../node_modules/font-awesome/css/font-awesome.min.css'; 
-import {BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
+import '../node_modules/font-awesome/css/font-awesome.min.css';
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 import Home from "./components/home";
 import HR from "./components/heartRate";
 import Sleep from "./components/sleep";
@@ -18,14 +18,15 @@ class App extends Component {
         return (
             <Router>
                 <div className="container">
+                    <Redirect exact from="/" to="/home" />
                     <Route path="/home" component={Home} />
-                    <Route path="/heart-rate/5e6fb4532da6544ee0990b93" component={HR} />
-                    <Route path="/sleep/5e6fb4532da6544ee0990b93" component={Sleep} />
-                    <Route path="/blood-preasure/5e6fb4532da6544ee0990b93" component={BP} />
-                    <Route path="/step-counter/5e6fb4532da6544ee0990b93" component={Steps} />
-                    <Route path="/drink-intake/5e6fb4532da6544ee0990b93" component={Drink} />
-                    <Route path="/food-intake/5e6fb4532da6544ee0990b93" component={Food} />
-                    <Route path="/login/5e6fb4532da6544ee0990b93" component={Login} />
+                    <Route path="/heart-rate" component={HR} />
+                    <Route path="/sleep" component={Sleep} />
+                    <Route path="/blood-preasure" component={BP} />
+                    <Route path="/step-counter" component={Steps} />
+                    <Route path="/drink-intake" component={Drink} />
+                    <Route path="/food-intake" component={Food} />
+                    <Route path="/login" component={Login} />
                 </div>
             </Router>
         )
