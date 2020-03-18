@@ -4,15 +4,24 @@ import { Link } from 'react-router-dom';
 
 export class Header extends Component {
     render() {   // Renders all html code
-        return (            // All code below are links to other pages and all use the same link styling. 
-            <div style={headerStyle}>
-                <h1>Staff Patient Detail Viewer</h1>
-                <Link to="/home" style={linkStyle}> Home</Link> | 
-                <Link to="/register-staff" style={linkStyle}> register staff </Link> | 
-                <Link to="/login-staff" style={linkStyle}> staff login </Link> | 
-                <Link to="/register-patient" style={linkStyle}> register patient</Link>
-            </div>
-        )
+        if (this.props.loggedIn) {
+            return (
+                <div style={headerStyle}>
+                    <h1>Staff Patient Detail Viewer</h1>
+                    <Link to="/home" style={linkStyle}> Home</Link> |
+                    <Link to="/register-patient" style={linkStyle}> register patient</Link>
+                </div>
+            )
+        } else {
+            return (
+                <div style={headerStyle}>
+                    <h1>Staff Patient Detail Viewer</h1>
+                    <Link to="/register-staff" style={linkStyle}> register staff </Link> |
+                    <Link to="/login-staff" style={linkStyle}> staff login </Link>
+                </div>
+            )
+        }
+
     }
 }
 const headerStyle = {   // styling for links

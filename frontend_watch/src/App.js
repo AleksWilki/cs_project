@@ -63,7 +63,7 @@ class App extends Component {
         }
         this.setState({
             previousDay: newDay,
-            stepsTaken: this.state.stepsTaken + 1,
+            stepsTaken: this.state.stepsTaken + 2,
             heartRate: 60 + Math.floor(Math.random() * 40),
         });
         let updates = {
@@ -90,7 +90,7 @@ class App extends Component {
             console.log("res2", res)
             this.setState({
                 userId: res.data._id,
-                interval: setInterval(this.onInterval, 3000),
+                interval: setInterval(this.onInterval, 6000),
             })
         }).catch(err => {
             console.log("err", err);

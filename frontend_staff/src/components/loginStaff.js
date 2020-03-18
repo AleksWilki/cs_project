@@ -39,7 +39,7 @@ export class loginStaff extends Component {
 
         Axios.post('http://localhost:3000/Staff/login', user).then(res => {
             console.log("res1", res)
-            this.props.updateUser();
+            this.props.login();
             this.props.history.push('/home');
         }).catch(err => {
             console.log("err", err);
@@ -53,7 +53,7 @@ export class loginStaff extends Component {
     render() {
         return (
             <div className="container">
-                <div style={pdaStyle}>
+                <div style={appStyle}>
                     <div className="row">
                         <div className="col-md-5"><label style={labelStyle}>Enter Username:</label></div>
                         <div className="col-md-4">
@@ -83,7 +83,7 @@ export class loginStaff extends Component {
     }
 }
 
-const pdaStyle = {   // Css styling for the form
+const appStyle = {   // Css styling for the form
     margin: "0 auto",
     textAlign: 'center',
     height: "450px",

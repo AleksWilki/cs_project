@@ -199,7 +199,17 @@ router.put('/Patient/patient/:id', function (req, res) {
                 }
                 patient.heartRateAverageToday = [(patient.heartRateAverageToday[1] + heartRate) / (patient.heartRateAverageToday[2] + 1), patient.heartRateAverageToday[1] + heartRate, patient.heartRateAverageToday[2] + 1]
             }
-            console.log(req.body)
+            console.log(req.body);
+            patient.severity = 'low'
+            if (patient.alcoholIntakeToday > 8 || patient.heartRatePeakToday > 120 || patient.heartRateAverageToday[0] > 80) {
+                patient.severity = 'medium'
+            }
+            if (patient.alcoholIntakeToday > 11 || patient.heartRatePeakToday > 135 || patient.heartRateAverageToday[0] > 90) {
+                patient.severity = 'high'
+            }
+            if (patient.alcoholIntakeToday > 13 || patient.heartRatePeakToday > 150 || patient.heartRateAverageToday[0] > 100) {
+                patient.severity = 'critical'
+            }
             patient.save().then(() => {
                 res.status(200).end();
             }).catch(err => {
