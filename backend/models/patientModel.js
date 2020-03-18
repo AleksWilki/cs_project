@@ -30,15 +30,15 @@ const patientSchema = new mongoose.Schema({
     },
     symptoms: {
         type: Array,
-        //required: true,
+        //required: true
     },
     severity: {
         type: String,
-        //required: true,
+        default: "none",
     },
     appointmentBooked: {
         type: Boolean,
-        //required: true,
+        default: false
     },
     appointmentDate: {
         type: Date,
@@ -52,16 +52,14 @@ const patientSchema = new mongoose.Schema({
         type: Number,
     },
     heartRateAverageToday: {
-        type: Number
+        type: Array,
+        default: [0, 0, 0]
     },
     heartRateAverageHistory: {
         type: Array,
         default: []
     },
 
-    latestBloodPressure: {
-        type: Array,
-    },
     bloodPressureHistory: {
         type: Array,
         default: []
@@ -108,9 +106,9 @@ patientSchema.pre("save", function (next) {
     // Ensure password is not double hashed when unmodifier
     if (!patient.isModified('password')) return next();
 
-    bcrypt.genSalt(10, function(err, salt) {
+    bcrypt.genSalt(10, function (err, salt) {
         if (err) return next(err);
-        bcrypt.hash(patient.password, salt, function(err, hash) {
+        bcrypt.hash(patient.password, salt, function (err, hash) {
             if (err) return next(err);
             patient.password = hash;
             next();

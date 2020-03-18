@@ -16,6 +16,7 @@ class App extends Component {
         this.sendBloodPressure = this.sendBloodPressure.bind(this);
 
         this.state = {
+            previousDay: 0,
             stepsTaken: 0,
             heartRate: 0,
             bloodPressure: [0, 0],
@@ -38,7 +39,14 @@ class App extends Component {
     }
     onInterval() {
         console.log("beep");
+        var newDay = (new Date()).getDay();
+        if (newDay > this.state.previousDay) {
+            this.setState({
+                stepsTaken: 0,
+            });
+        }
         this.setState({
+            previousDay: newDay,
             stepsTaken: this.state.stepsTaken + 1,
             heartRate: 60 + Math.floor(Math.random() * 40),
         });

@@ -13,6 +13,22 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const Staff = require('./models/staffModel');
 const Patient = require('./models/patientModel');
+const schedule = require('node-schedule');
+
+schedule.scheduleJob({ hour: 06, minute: 06 }, () => {
+    Patient.find({}).then(function (patients) {
+        patients.forEach(function (patient) {
+            console.log(patient)
+            patient.heartRateAverageHistoryheartRateAverageHistory.unshift(patient.heartRateAverageToday);
+            patient.calorieIntakeHistory.unshift(patient.calorieIntakeToday);
+            patient.alcoholIntakeHistory.unshift(patient.alcoholIntakeToday);
+            patient.stepsTakenHistory.unshift(patient.stepsTakenToday);
+            patient.timeSleptHistory.unshift(patient.timeSleptToday);
+            patient.heartRateAverageHistory.unshift(patient.heartRateAverageToday);
+            patient.save();
+        });
+    })
+});
 
 // Passport and Session initialization
 passport.serializeUser(function (user, done) {
@@ -147,12 +163,19 @@ router.put('/Patient/patient/:id', function (req, res) {
         if (err) {
             console.log(err)
         } else if (patient) {
-            req.body.heartRate ? patient.latestHeartRate = req.body.heartRate : null;
-            req.body.bloodPressure ? patient.latestBloodPressure = req.body.bloodPressure : null;
+            req.body.bloodPressure ? patient.bloodPressureHistory.unshift(req.body.bloodPressure) : null;
             req.body.stepsTaken ? patient.stepsTakenToday = req.body.stepsTaken : null;
             req.body.calories ? patient.calorieIntakeToday = patient.calorieIntakeToday + parseInt(req.body.calories) : null;
             req.body.alcohol ? patient.alcoholIntakeToday = patient.alcoholIntakeToday + parseInt(req.body.alcohol) : null;
             req.body.sleep ? patient.timeSleptToday = patient.timeSleptToday + parseInt(req.body.sleep) : null;
+            if (req.body.heartRate) {
+                var heartRate = parseInt(req.body.heartRate)
+                patient.latestHeartRate = heartRate
+                if (heartRate > patient.heartRatePeakToday) {
+                    patient.heartRatePeakToday = heartRate
+                }
+                patient.heartRateAverageToday = [(patient.heartRateAverageToday[1] + heartRate) / (patient.heartRateAverageToday[2] + 1), patient.heartRateAverageToday[1] + heartRate, patient.heartRateAverageToday[2] + 1]
+            }
             console.log(req.body)
             patient.save().then(() => {
                 res.status(200).end();
