@@ -144,15 +144,21 @@ router.get('/Patient/patient/:id', function (req, res) {
 });
 router.put('/Patient/patient/:id', function (req, res) {
     Patient.findById(req.params.id, (err, patient) => {
-        if (patient) {
-            patient = req.body;
-            console.log(patient)
-
-            // patient.save().then(() => {
-            //     res.status(200).end();
-            // }).catch(err => {
-            //     res.status(400).send(err);
-            // });
+        if (err) {
+            console.log(err)
+        } else if (patient) {
+            console.log("oldPatient", patient)
+            console.log("reqbody", req.body)
+            patient.latestHeartRate = req.body.heartRate;
+            patient.latestBloodPressure = req.body.bloodPressure;
+            patient.stepsTakenToday = req.body.stepsTaken;
+            console.log("newpatient:", patient)
+            patient.save().then(() => {
+                res.status(200).end();
+            }).catch(err => {
+                console.log(err)
+                res.status(400).send(err);
+            });
         }
         else {
             res.status(404).end();
@@ -191,7 +197,7 @@ router.get('/Patient/:filter', function (req, res) {
     for (var param in filterJson) {
         if (filterJson[param] === '') {
             delete filterJson[param];
-        } else if (typeof filterJson[param] === String){
+        } else if (typeof filterJson[param] === String) {
             filterJson[param] = new RegExp(filterJson[param], "i");
         }
     }

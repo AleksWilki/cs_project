@@ -7,73 +7,96 @@ const Date2 = new Date("<YYYY-mm-dd>");
 const patientSchema = new mongoose.Schema({
     registerDate: {
         type: Date,
-        required: true,
+        //required: true,
         default: Date.now
     },
     email: {
         type: String,
-        required: true,
+        //required: true,
         lowercase: true,
         unique: true
     },
     password: {
         type: String,
-        required: true
+        //required: true
     },
     name: {
         type: String,
-        required: true,
+        //required: true,
     },
     birthDate: {
         type: Date,
-        required: true
+        //required: true
     },
-
     symptoms: {
         type: Array,
-        required: true,
+        //required: true,
     },
     severity: {
         type: String,
-        required: true,
+        //required: true,
     },
     appointmentBooked: {
         type: Boolean,
-        required: true,
+        //required: true,
     },
     appointmentDate: {
         type: Date,
-        required: false,
     },
 
-    heartRate: {
+    latestHeartRate: {
+        type: Number,
+        default: 0
+    },
+    heartRatePeakToday: {
+        type: Number,
+    },
+    heartRateAverageToday: {
+        type: Number
+    },
+    heartRateAverageHistory: {
         type: Array,
-        required: true,
         default: []
     },
-    bloodPressure: {
+
+    latestBloodPressure: {
         type: Array,
-        required: true,
+    },
+    bloodPressureHistory: {
+        type: Array,
         default: []
     },
-    calorieIntake: {
+
+    calorieIntakeToday: {
+        type: Number,
+    },
+    calorieIntakeHistory: {
         type: Array,
-        required: true,
         default: []
     },
-    alcoholIntake: {
+
+    alcoholIntakeToday: {
+        type: Number,
+    },
+    alcoholIntakeHistory: {
         type: Array,
-        required: true,
         default: []
     },
-    stepsTaken: {
+
+    stepsTakenToday: {
+        type: Number,
+        default: 0
+    },
+    stepsTakenHistory: {
         type: Array,
-        required: true,
         default: []
     },
-    timeSlept: {
+
+    timeSleptToday: {
+        type: Number,
+    },
+    timeSleptHistory: {
         type: Array,
-        required: true,
         default: []
     },
 });
