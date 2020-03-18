@@ -7,7 +7,7 @@ export class sleep extends Component {
     render() {
         return (
             <div className="container">
-                <div style={pdaStyle}>
+                <div style={appStyle}>
                     <div className="row">
                         <div className="col-md-4"><i className="fa fa-bed fa-5x"></i></div>
                         <div className="col-md-4">
@@ -18,7 +18,7 @@ export class sleep extends Component {
                 </div>
                 <div className="row">
                     <div className="col-md-4">
-                        <Link style={linkStyle} to="/home"><div style={{ fontSize: "20px" }}> <i className="fa fa-arrow-left fa-3x"></i> PDA Back Button</div></Link>
+                        <Link style={linkStyle} to="/home"><div style={{ fontSize: "20px" }}> <i className="fa fa-arrow-left fa-3x"></i>App Back Button</div></Link>
                     </div>
                 </div>
             </div>
@@ -26,7 +26,7 @@ export class sleep extends Component {
     }
 }
 
-const pdaStyle = {   // Css styling for the form
+const appStyle = {   // Css styling for the form
     margin: "0 auto",
     textAlign: 'center',
     height: "450px",

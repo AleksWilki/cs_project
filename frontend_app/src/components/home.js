@@ -7,7 +7,7 @@ export class home extends Component {
     render() {
         return (
             <div className="container">
-                <div style={pdaStyle}>
+                <div style={appStyle}>
                     <div className="row">
                         <div className="col-md-4" style={icon}>
                             <Link style={linkStyle} to="/blood-preasure"> <i style={inIcon} className="fa fa-heart"></i></Link>
@@ -36,7 +36,7 @@ export class home extends Component {
     }
 }
 
-const pdaStyle = {   // Css styling for the form
+const appStyle = {   // Css styling for the form
     margin: "0 auto",
     textAlign: 'center',
     height: "450px",
