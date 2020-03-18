@@ -149,9 +149,10 @@ router.put('/Patient/patient/:id', function (req, res) {
         } else if (patient) {
             req.body.heartRate ? patient.latestHeartRate = req.body.heartRate : null;
             req.body.bloodPressure ? patient.latestBloodPressure = req.body.bloodPressure : null;
-            req.body.stepsTaken? patient.stepsTakenToday = req.body.stepsTaken: null;
-            req.body.calories? patient.calorieIntakeToday = patient.calorieIntakeToday + parseInt(req.body.calories): null;
-            req.body.alcohol? patient.alcoholIntakeToday = patient.alcoholIntakeToday + parseInt(req.body.alcohol): null;
+            req.body.stepsTaken ? patient.stepsTakenToday = req.body.stepsTaken : null;
+            req.body.calories ? patient.calorieIntakeToday = patient.calorieIntakeToday + parseInt(req.body.calories) : null;
+            req.body.alcohol ? patient.alcoholIntakeToday = patient.alcoholIntakeToday + parseInt(req.body.alcohol) : null;
+            req.body.sleep ? patient.timeSleptToday = patient.timeSleptToday + parseInt(req.body.sleep) : null;
             console.log(req.body)
             patient.save().then(() => {
                 res.status(200).end();

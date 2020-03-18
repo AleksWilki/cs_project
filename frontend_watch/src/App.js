@@ -12,6 +12,8 @@ class App extends Component {
         super(props);
 
         this.onInterval = this.onInterval.bind(this);
+        this.postSleep = this.postSleep.bind(this);
+        this.sendBloodPressure = this.sendBloodPressure.bind(this);
 
         this.state = {
             stepsTaken: 0,
@@ -19,6 +21,20 @@ class App extends Component {
             bloodPressure: [0, 0],
             interval: setInterval(this.onInterval, 3000)
         }
+    }
+    postSleep() {
+        console.log("beep");
+        let updates = {
+            sleep: 300 + Math.floor(Math.random() * 5 * 60),
+        }
+        Axios.put(`http://localhost:3000/Patient/patient/5e6c9247bee9cc271cbf3e22`, updates);
+    }
+    sendBloodPressure() {
+        console.log("boop");
+        let updates = {
+            bloodPressure: [90 + Math.floor(Math.random() * 30), 60 + Math.floor(Math.random() * 20)]
+        }
+        Axios.put(`http://localhost:3000/Patient/patient/5e6c9247bee9cc271cbf3e22`, updates);
     }
     onInterval() {
         console.log("beep");
@@ -40,6 +56,8 @@ class App extends Component {
                     <Route path="/heart-rate" component={(props) => <HR {...props} heartRate={this.state.heartRate} />} />
                     <Route path="/blood-preasure" component={(props) => <BP {...props} bloodPressure={this.state.bloodPressure} />} />
                     <Route path="/step-counter" component={(props) => <Steps {...props} stepsTaken={this.state.stepsTaken} />} />
+                    <button className="col-md-4" onClick={this.postSleep}>Patient Wakes up</button>
+                    <button className="col-md-4" onClick={this.sendBloodPressure}>Take Blood Pressure</button>
                 </div>
             </Router>
         )
