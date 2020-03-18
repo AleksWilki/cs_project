@@ -85,8 +85,6 @@ class staffHomePage extends Component {
                         Requires Appointment
                     </button>
 
-                    <Link to="/register-patient"> Register Patient </Link>
-
                     <table className="table table-striped">
                         <thead>
                             <tr>
