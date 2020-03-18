@@ -10,24 +10,24 @@ export class home extends Component {
                 <div style={pdaStyle}>
                     <div className="row">
                         <div className="col-md-4" style={icon}>
-                            <Link style={linkStyle} to="/blood-preasure"> <i className="fa fa-heartbeat fa-5x"></i></Link>
+                            <Link style={linkStyle} to="/blood-preasure"> <i style={inIcon} className="fa fa-heart"></i></Link>
                         </div>
                         <div className="col-md-4" style={icon}>
-                            <Link style={linkStyle} to="/sleep"> <i className="fa fa-bed fa-5x"></i></Link>
+                            <Link style={linkStyle} to="/sleep"> <i style={inIcon} className="fa fa-bed"></i></Link>
                         </div>
                         <div className="col-md-4" style={icon} >
-                            <Link style={linkStyle} to="/food-intake"><i className="fa fa-spoon fa-5x"></i></Link>
+                            <Link style={linkStyle} to="/food-intake"><i style={inIcon} className="fa fa-spoon"></i></Link>
                         </div>
                     </div>
                     <div className="row">
                         <div className="col-md-4" style={icon}>
-                            <Link style={linkStyle} to="/step-counter"><i className="fa fa-blind fa-5x"></i></Link>
+                            <Link style={linkStyle} to="/step-counter"><i style={inIcon} className="fa fa-blind"></i></Link>
                         </div>
                         <div className="col-md-4" style={icon}>
-                            <Link style={linkStyle} to="/heart-rate"><i className="fa fa-heart fa-5x"></i></Link>
+                            <Link style={linkStyle} to="/heart-rate"><i style={inIcon} className="fa fa-heartbeat"></i></Link>
                         </div>
                         <div className="col-md-4" style={icon}>
-                            <Link style={linkStyle} to="/drink-intake"><i className="fa fa-beer fa-5x"></i></Link>
+                            <Link style={linkStyle} to="/drink-intake"><i style={inIcon} className="fa fa-beer"></i></Link>
                         </div>
                     </div>
                 </div>
@@ -44,8 +44,12 @@ const pdaStyle = {   // Css styling for the form
     border: "10px solid black",
     padding: "30px",
 }
+
 const icon = {
     padding: "10px"
+}
+const inIcon = {
+    'font-size': "10em"
 }
 
 const linkStyle = {
