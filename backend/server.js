@@ -20,6 +20,43 @@ const socketio = require('socket.io');          // adds use of socket.io module
 const io = socketio(server);                       // creates instance of io using socket and express servr
 const {addUser, removeUser, getUser, getUsersInRoom } = require('./controllers/users');             // initialises functions from users controller
 
+//Chat start
+io.on('connection',(socket) => {                                        // creates connection for user chat
+    console.log('You have now been connected!')
+    socket.on('join',({name, room}, callback) => {
+        const {error, user} = addUser({id: socket.id, name, room});
+
+        if(error) return callback(error);
+
+        socket.emit('message', {user:'admin', text: `${user.name}, Welcome to room ${user.room}.`});
+
+        socket.broadcast.to(user.room).emit('message', {user: 'admin', text: `${user.name} has joined!`});
+
+        io.to(user.room).emit('roomData',{room: user.room, users: getUsersInRoom(user.room) });
+        socket.join(user.room);
+        callback();
+    });
+
+    socket.on('sendMessage', (message, callback) => {           // function to send message through user chat
+        const user = getUser(socket.id);
+        io.to(user.room).emit('message', {user: user.name, text:message}); // sends message to user from admin
+
+        callback();
+    });
+
+    socket.on('disconnet',() => {                               // function when disconnected from user chat
+        console.log('You have been disconnected')
+        const user = removeUser(socket.id);
+
+        if(user){
+            io.to(user.room).emit('message', {user: 'Admin', text:`${user.name} has left.`});  // sends message to user from admin
+            io.to(user.room).emit('roomData', {room: user.room, users:getUsersInRoom(user.room)});
+        }
+    })
+});
+
+//Chat End
+
 schedule.scheduleJob({ hour: 00, minute: 00 }, () => {
     Patient.find({}).then(function (patients) {
         patients.forEach(function (patient) {
