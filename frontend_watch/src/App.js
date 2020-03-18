@@ -25,12 +25,10 @@ class App extends Component {
         this.setState({
             stepsTaken: this.state.stepsTaken + 1,
             heartRate: 60 + Math.floor(Math.random() * 40),
-            bloodPressure: [90 + Math.floor(Math.random() * 30), 60 + Math.floor(Math.random() * 20)],
         });
         let updates = {
             stepsTaken: this.state.stepsTaken,
             heartRate: this.state.heartRate,
-            bloodPressure: this.state.bloodPressure,
         }
         Axios.put(`http://localhost:3000/Patient/patient/5e6c9247bee9cc271cbf3e22`, updates);
     }
