@@ -16,6 +16,10 @@ const Patient = require('./models/patientModel');
 const schedule = require('node-schedule');
 const cookieParser = require('cookie-parser');
 
+const socketio = require('socket.io');          // adds use of socket.io module
+const io = socketio(server);                       // creates instance of io using socket and express servr
+const {addUser, removeUser, getUser, getUsersInRoom } = require('./controllers/users');             // initialises functions from users controller
+
 schedule.scheduleJob({ hour: 00, minute: 00 }, () => {
     Patient.find({}).then(function (patients) {
         patients.forEach(function (patient) {
