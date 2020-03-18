@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
-import Axios from 'axios';
+import axios from 'axios';
 import "bootstrap/dist/css/bootstrap.min.css";
 import '../node_modules/font-awesome/css/font-awesome.min.css';
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 import HR from "./components/heartRate";
 import BP from "./components/bloodPreasure";
 import Steps from "./components/stepCounter";
+
+const Axios = axios.create({
+    withCredentials: true
+});
 
 class App extends Component {
     constructor(props) {
@@ -15,30 +19,43 @@ class App extends Component {
         this.postSleep = this.postSleep.bind(this);
         this.sendBloodPressure = this.sendBloodPressure.bind(this);
 
+        this.onChangeEmail = this.onChangeEmail.bind(this);
+        this.onChangePassword = this.onChangePassword.bind(this);
+        this.login = this.login.bind(this);
+
         this.state = {
+            userId: '',
             previousDay: 0,
             stepsTaken: 0,
             heartRate: 0,
             bloodPressure: [0, 0],
-            interval: setInterval(this.onInterval, 3000)
+            interval: setInterval(this.onInterval, 3000),
+            email: '',
+            password: '',
         }
     }
     postSleep() {
-        console.log("beep");
         let updates = {
             sleep: 300 + Math.floor(Math.random() * 5 * 60),
         }
-        Axios.put(`http://localhost:3000/Patient/patient/5e6c9247bee9cc271cbf3e22`, updates);
+        if (this.state.userId !== '') {
+            console.log("sleep sent to", this.state.userId);
+            Axios.put(`http://localhost:3000/Patient/patient/${this.state.userId}`, updates);
+        }
     }
     sendBloodPressure() {
-        console.log("boop");
-        let updates = {
+        this.setState({
             bloodPressure: [90 + Math.floor(Math.random() * 30), 60 + Math.floor(Math.random() * 20)]
+        });
+        let updates = {
+            bloodPressure: this.state.bloodPressure
         }
-        Axios.put(`http://localhost:3000/Patient/patient/5e6c9247bee9cc271cbf3e22`, updates);
+        if (this.state.userId !== '') {
+            console.log("bp sent to", this.state.userId);
+            Axios.put(`http://localhost:3000/Patient/patient/${this.state.userId}`, updates);
+        }
     }
     onInterval() {
-        console.log("beep");
         var newDay = (new Date()).getDay();
         if (newDay > this.state.previousDay) {
             this.setState({
@@ -54,7 +71,45 @@ class App extends Component {
             stepsTaken: this.state.stepsTaken,
             heartRate: this.state.heartRate,
         }
-        Axios.put(`http://localhost:3000/Patient/patient/5e6c9247bee9cc271cbf3e22`, updates);
+        if (this.state.userId !== '') {
+            console.log("hr/steps sent to", this.state.userId);
+            Axios.put(`http://localhost:3000/Patient/patient/${this.state.userId}`, updates);
+        }
+    }
+    onChangeEmail(e) {
+        this.setState({
+            email: e.target.value
+        })
+    }
+    onChangePassword(e) {
+        this.setState({
+            password: e.target.value
+        })
+    }
+    login() {
+        const user = {
+            email: this.state.email,
+            password: this.state.password,
+        }
+
+        Axios.post('http://localhost:3000/Patient/login', user).then(res => {
+            console.log("res1", res)
+            Axios.get('http://localhost:3000/Patient/details').then(res => {
+                console.log("res2", res)
+                this.setState({
+                    userId: res.data._id
+                })
+            }).catch(err => {
+                console.log("err", err);
+            })
+        }).catch(err => {
+            console.log("err", err);
+        })
+
+        this.setState({
+            email: '',
+            password: '',
+        })
     }
     render() {
         return (
@@ -66,6 +121,31 @@ class App extends Component {
                     <Route path="/step-counter" component={(props) => <Steps {...props} stepsTaken={this.state.stepsTaken} />} />
                     <button className="col-md-4" onClick={this.postSleep}>Patient Wakes up</button>
                     <button className="col-md-4" onClick={this.sendBloodPressure}>Take Blood Pressure</button>
+                    <div>
+                        <div className="row">
+                            <div className="col-md-5"><label>Enter Username:</label></div>
+                            <div className="col-md-4">
+                                <input type="text"
+                                    className="form-control"
+                                    value={this.state.email}
+                                    onChange={this.onChangeEmail}
+                                />
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-md-5"><label>Enter Password:</label></div>
+                            <div className="col-md-4">
+                                <input type="password"
+                                    className="form-control"
+                                    value={this.state.password}
+                                    onChange={this.onChangePassword}
+                                />
+                            </div>
+                        </div>
+                        <div className="row" >
+                            <button type="button" className="btn btn-success" onClick={this.login}>Set connection</button>
+                        </div>
+                    </div>
                 </div>
             </Router>
         )
