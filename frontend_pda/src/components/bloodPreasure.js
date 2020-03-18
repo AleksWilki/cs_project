@@ -12,7 +12,7 @@ export class bloodPreasure extends Component {
                         <div className="col-md-4"><i className="fa fa-heartbeat fa-5x"></i></div>
                         <div className="col-md-4">
                             <label style={{ fontSize: "20px" }}>Latest Blood Preasure:</label><br></br>
-                            <h3 style={{ fontSize: "30px" }}>140/90</h3>
+                            <h3 style={{ fontSize: "30px" }}>{this.props.bloodPressure ? this.props.bloodPressure[0] + ", " + this.props.bloodPressure[1] : 0}</h3>
                         </div>
                     </div>
                 </div>

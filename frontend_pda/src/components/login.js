@@ -31,19 +31,17 @@ export class login extends Component {
         })
     }
     login() {
+        console.log("here")
         const user = {
             email: this.state.email,
             password: this.state.password,
         }
+        var here = this
 
         Axios.post('http://localhost:3000/Patient/login', user).then(res => {
             console.log("res1", res)
-            Axios.get('http://localhost:3000/Patient/details').then(res => {
-                console.log("res2", res)
-                this.props.history.push('/home');
-            }).catch(err => {
-                console.log("err", err);
-            })
+            here.props.updateUser();
+            this.props.history.push('/home');
         }).catch(err => {
             console.log("err", err);
         })

@@ -12,7 +12,7 @@ export class heartRate extends Component {
                         <div className="col-md-4"><i className="fa fa-heart fa-5x"></i></div>
                         <div className="col-md-4">
                             <label style={{ fontSize: "25px" }}>Average Heart Rate Today:</label><br></br>
-                            <h3 style={{ fontSize: "80px" }}>70</h3>
+                            <h3 style={{ fontSize: "80px" }}>{Math.round(this.props.heartRate[0])}</h3>
                         </div>
                     </div>
                 </div>

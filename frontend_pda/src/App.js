@@ -10,23 +10,54 @@ import Steps from "./components/stepCounter";
 import Drink from "./components/drinkIntake";
 import Food from "./components/foodIntake";
 import Login from "./components/login";
+import axios from 'axios';
 
-// <Redirect exact from="/" to="/login" /> to be added when login is working
+const Axios = axios.create({
+    withCredentials: true
+});
 
 class App extends Component {
+    constructor(props) {
+        super(props);
+
+        this.updateUser = this.updateUser.bind(this);
+        this.refreshUser = this.refreshUser.bind(this);
+
+        this.state = {
+            details: {}
+        }
+    }
+    updateUser() {
+        console.log("updating")
+        Axios.get('http://localhost:3000/Patient/details').then(res => {
+            console.log("updateRes:", res.data)
+            this.setState({ details: res.data });
+            setInterval(this.refreshUser, 5000);
+        }).catch((err) => {
+            console.log(err)
+        })
+    }
+    refreshUser() {
+        console.log("refreshing")
+        Axios.get('http://localhost:3000/Patient/details').then(res => {
+            this.setState({ details: res.data });
+        }).catch((err) => {
+            console.log(err)
+        })
+    }
     render() {
         return (
             <Router>
                 <div className="container">
                     <Redirect exact from="/" to="/login" />
                     <Route path="/home" component={Home} />
-                    <Route path="/heart-rate" component={HR} />
-                    <Route path="/sleep" component={Sleep} />
-                    <Route path="/blood-preasure" component={BP} />
-                    <Route path="/step-counter" component={Steps} />
-                    <Route path="/drink-intake" component={Drink} />
-                    <Route path="/food-intake" component={Food} />
-                    <Route path="/login" component={Login} />
+                    <Route path="/heart-rate" component={(props) => <HR {...props} heartRate={this.state.details.heartRateAverageToday} />} />
+                    <Route path="/sleep" component={(props) => <Sleep {...props} sleep={this.state.details.timeSleptToday} />} />
+                    <Route path="/blood-preasure" component={(props) => <BP {...props} bloodPressure={this.state.details.bloodPressureHistory ? this.state.details.bloodPressureHistory[0] : undefined} />} />
+                    <Route path="/step-counter" component={(props) => <Steps {...props} steps={this.state.details.stepsTakenToday} />} />
+                    <Route path="/drink-intake" component={(props) => <Drink {...props} userId={this.state.details._id} />} />
+                    <Route path="/food-intake" component={(props) => <Food {...props} userId={this.state.details._id} />} />
+                    <Route path="/login" component={(props) => <Login {...props} updateUser={this.updateUser} />} />
                 </div>
             </Router>
         )

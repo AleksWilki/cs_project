@@ -223,7 +223,6 @@ router.delete('/Patient/patient/:id', function (req, res) {
     });
 });
 router.post('/Patient/login', passport.authenticate('local'), function (req, res) {
-    console.log("here tho")
     res.status(200).end();
 });
 router.post('/Patient/logout', function (req, res) {
@@ -241,6 +240,7 @@ router.get('/Patient', function (req, res) {
     })
 });
 router.get('/Patient/:filter', function (req, res) {
+    console.log("here?")
     let filterJson = JSON.parse(`{${req.params.filter}}`);
     for (var param in filterJson) {
         if (filterJson[param] === '') {

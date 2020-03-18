@@ -11,8 +11,8 @@ export class sleep extends Component {
                     <div className="row">
                         <div className="col-md-4"><i className="fa fa-bed fa-5x"></i></div>
                         <div className="col-md-4">
-                            <label style={{ fontSize: "20px" }}>Most recent sleep pattern is:</label><br></br>
-                            <h3 style={{ fontSize: "30px" }}>11pm -> 8am</h3>
+                            <label style={{ fontSize: "20px" }}>Hours Slept Today:</label><br></br>
+                            <h3 style={{ fontSize: "30px" }}>{this.props.sleep / 60}</h3>
                         </div>
                     </div>
                 </div>

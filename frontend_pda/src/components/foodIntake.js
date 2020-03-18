@@ -26,7 +26,7 @@ export class foodIntake extends Component {
             let updates = {
                 calories: this.state.calories,
             }
-            Axios.put(`http://localhost:3000/Patient/patient/5e6c9247bee9cc271cbf3e22`, updates);
+            Axios.put(`http://localhost:3000/Patient/patient/${this.props.userId}`, updates);
         }
     }
     render() {
