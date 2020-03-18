@@ -150,6 +150,9 @@ router.put('/Patient/patient/:id', function (req, res) {
             req.body.heartRate ? patient.latestHeartRate = req.body.heartRate : null;
             req.body.bloodPressure ? patient.latestBloodPressure = req.body.bloodPressure : null;
             req.body.stepsTaken? patient.stepsTakenToday = req.body.stepsTaken: null;
+            req.body.calories? patient.calorieIntakeToday = patient.calorieIntakeToday + parseInt(req.body.calories): null;
+            req.body.alcohol? patient.alcoholIntakeToday = patient.alcoholIntakeToday + parseInt(req.body.alcohol): null;
+            console.log(req.body)
             patient.save().then(() => {
                 res.status(200).end();
             }).catch(err => {

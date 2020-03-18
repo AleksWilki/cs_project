@@ -69,6 +69,7 @@ const patientSchema = new mongoose.Schema({
 
     calorieIntakeToday: {
         type: Number,
+        default: 0
     },
     calorieIntakeHistory: {
         type: Array,
@@ -77,6 +78,7 @@ const patientSchema = new mongoose.Schema({
 
     alcoholIntakeToday: {
         type: Number,
+        default: 0
     },
     alcoholIntakeHistory: {
         type: Array,
@@ -94,6 +96,7 @@ const patientSchema = new mongoose.Schema({
 
     timeSleptToday: {
         type: Number,
+        default: 0
     },
     timeSleptHistory: {
         type: Array,
