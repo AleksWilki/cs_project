@@ -15,26 +15,27 @@ const Patient = require('./models/patientModel');
 const schedule = require('node-schedule');
 const cookieParser = require('cookie-parser');
 
+//Chat start
+
 const http = require('http');                   // adds use of http requests
 const socketio = require('socket.io');          // adds use of socket.io module
 const server = http.createServer(app);          // creates chat server using http and express server
 const io = socketio(server);                       // creates instance of io using socket and express servr
 const {addUser, removeUser, getUser, getUsersInRoom } = require('./controllers/users');             // initialises functions from users controller
 
-//Chat start
 io.on('connection',(socket) => {                                        // creates connection for user chat
     console.log('You have now been connected!')
     socket.on('join',({name, room}, callback) => {
-        const {error, user} = addUser({id: socket.id, name, room});
+        const {error, user} = addUser({id: socket.id, name, room});  // adds user to room using username, room and socket.id
 
         if(error) return callback(error);
 
-        socket.emit('message', {user:'admin', text: `${user.name}, Welcome to room ${user.room}.`});
+        socket.emit('message', {user:'admin', text: `${user.name}, Welcome to room ${user.room}.`});  // emits message once user has joined welcomign them to room
 
-        socket.broadcast.to(user.room).emit('message', {user: 'admin', text: `${user.name} has joined!`});
+        socket.broadcast.to(user.room).emit('message', {user: 'admin', text: `${user.name} has joined!`}); // outputs that the user has joined
 
         io.to(user.room).emit('roomData',{room: user.room, users: getUsersInRoom(user.room) });
-        socket.join(user.room);
+        socket.join(user.room);                                                                         // connects user to the room
         callback();
     });
 
@@ -51,12 +52,13 @@ io.on('connection',(socket) => {                                        // creat
 
         if(user){
             io.to(user.room).emit('message', {user: 'Admin', text:`${user.name} has left.`});  // sends message to user from admin
-            io.to(user.room).emit('roomData', {room: user.room, users:getUsersInRoom(user.room)});
+            io.to(user.room).emit('roomData', {room: user.room, users:getUsersInRoom(user.room)}); // gets all users currently in room
         }
     })
 });
 
 //Chat End
+
 
 schedule.scheduleJob({ hour: 00, minute: 00 }, () => {
     Patient.find({}).then(function (patients) {

@@ -4,12 +4,12 @@ import { Link } from 'react-router-dom';
 
 export class Header extends Component {
     render() {   // Renders all html code
-        if (this.props.loggedIn) {
+        if (this.props.loggedIn) { //  ./join below is a link to the enhancement
             return (
                 <div style={headerStyle}>
                     <h1>Staff Patient Detail Viewer</h1>
                     <Link to="/home" style={linkStyle}> Home</Link> |
-                    <Link style={linkStyle} to="/join"> Medical Staff Chat Rooms </Link> |
+                    <Link style={linkStyle} to="/join"> Medical Staff Chat Rooms </Link> | 
                     <Link to="/register-patient" style={linkStyle}> register patient</Link>
                 </div>
             )

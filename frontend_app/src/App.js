@@ -49,7 +49,7 @@ class App extends Component {
         return (
             <Router>
                 <div className="container">
-                    <Redirect exact from="/" to="/login" />
+                    
                     <Route path="/home" component={Home} />
                     <Route path="/heart-rate" component={(props) => <HR {...props} heartRate={this.state.details.heartRateAverageToday} />} />
                     <Route path="/sleep" component={(props) => <Sleep {...props} sleep={this.state.details.timeSleptToday} />} />
