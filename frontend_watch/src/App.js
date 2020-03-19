@@ -116,19 +116,30 @@ class App extends Component {
         })
     }
     render() {
-        return (
-            <Router>
-                <div className="container">
-                    <Redirect exact from="/" to="/login" />
-                    <Route path="/login" component={(props) => <Login {...props} login={this.login} />} />
-                    <Route path="/heart-rate" component={(props) => <HR {...props} heartRate={this.state.heartRate} />} />
-                    <Route path="/blood-preasure" component={(props) => <BP {...props} bloodPressure={this.state.bloodPressure} />} />
-                    <Route path="/step-counter" component={(props) => <Steps {...props} stepsTaken={this.state.stepsTaken} />} />
-                    <button className="col-md-4" onClick={this.postSleep}>Patient Wakes up</button>
-                    <button className="col-md-4" onClick={this.sendBloodPressure}>Take Blood Pressure</button>
-                </div>
-            </Router>
-        )
+        if (this.state.userId) {
+            return (
+                <Router>
+                    <div className="container">
+                        <Redirect exact from="/" to="/heart-rate" />
+                        <Route path="/heart-rate" component={(props) => <HR {...props} heartRate={this.state.heartRate} />} />
+                        <Route path="/blood-preasure" component={(props) => <BP {...props} bloodPressure={this.state.bloodPressure} />} />
+                        <Route path="/step-counter" component={(props) => <Steps {...props} stepsTaken={this.state.stepsTaken} />} />
+                        <button className="col-md-4" onClick={this.postSleep}>Patient Wakes up</button>
+                        <button className="col-md-4" onClick={this.sendBloodPressure}>Take Blood Pressure</button>
+                    </div>
+                </Router>
+            )
+        } else {
+            return (
+                <Router>
+                    <div className="container">
+                        <Redirect exact from="/" to="/login" />
+                        <Route path="/login" component={(props) => <Login {...props} login={this.login} />} />
+                    </div>
+                </Router>
+            )
+        }
+
     }
 }
 

@@ -46,21 +46,32 @@ class App extends Component {
         })
     }
     render() {
-        return (
-            <Router>
-                <div className="container">
-                    <Redirect exact from="/" to="/login" />
-                    <Route path="/home" component={Home} />
-                    <Route path="/heart-rate" component={(props) => <HR {...props} heartRate={this.state.details.heartRateAverageToday} />} />
-                    <Route path="/sleep" component={(props) => <Sleep {...props} sleep={this.state.details.timeSleptToday} />} />
-                    <Route path="/blood-preasure" component={(props) => <BP {...props} bloodPressure={this.state.details.bloodPressureHistory ? this.state.details.bloodPressureHistory[0] : undefined} />} />
-                    <Route path="/step-counter" component={(props) => <Steps {...props} steps={this.state.details.stepsTakenToday} />} />
-                    <Route path="/drink-intake" component={(props) => <Drink {...props} userId={this.state.details._id} />} />
-                    <Route path="/food-intake" component={(props) => <Food {...props} userId={this.state.details._id} />} />
-                    <Route path="/login" component={(props) => <Login {...props} updateUser={this.updateUser} />} />
-                </div>
-            </Router>
-        )
+        if (Object.keys(this.state.details).length !== 0) {
+            return (
+                <Router>
+                    <div className="container">
+                        <Redirect exact from="/" to="/home" />
+                        <Route path="/home" component={Home} />
+                        <Route path="/heart-rate" component={(props) => <HR {...props} heartRate={this.state.details.heartRateAverageToday} />} />
+                        <Route path="/sleep" component={(props) => <Sleep {...props} sleep={this.state.details.timeSleptToday} />} />
+                        <Route path="/blood-preasure" component={(props) => <BP {...props} bloodPressure={this.state.details.bloodPressureHistory ? this.state.details.bloodPressureHistory[0] : undefined} />} />
+                        <Route path="/step-counter" component={(props) => <Steps {...props} steps={this.state.details.stepsTakenToday} />} />
+                        <Route path="/drink-intake" component={(props) => <Drink {...props} userId={this.state.details._id} />} />
+                        <Route path="/food-intake" component={(props) => <Food {...props} userId={this.state.details._id} />} />
+                    </div>
+                </Router>
+            )
+        } else {
+            return (
+                <Router>
+                    <div className="container">
+                        <Redirect exact from="/" to="/login" />
+                        <Route path="/login" component={(props) => <Login {...props} updateUser={this.updateUser} />} />
+                    </div>
+                </Router>
+            )
+        }
+
     }
 }
 
