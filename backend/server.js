@@ -90,6 +90,14 @@ app.use(expressSession({
     resave: false,
     saveUninitialized: false
 }));
+
+const isPatient = function (req) {
+    return req.isAuthenticated() && req.user.type === 'patient'
+}
+const isStaff = function (req) {
+    return req.isAuthenticated() && req.user.type === 'staff'
+}
+
 const getUserDetails = function (req) {
     return new Promise(function (resolve, reject) {
         if (req.isAuthenticated()) {
