@@ -38,7 +38,7 @@ passport.serializeUser(function (user, done) {
 passport.deserializeUser(
     function (req, id, done) {
         var DB;
-        console.log("url",req.url)
+        console.log("url", req.url)
         if (req.url.includes("/Staff/")) {
             DB = Staff;
         } else if (req.url.includes("/Patient/")) {
