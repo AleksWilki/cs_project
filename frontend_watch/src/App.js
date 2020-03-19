@@ -7,6 +7,7 @@ import HR from "./components/heartRate";
 import BP from "./components/bloodPreasure";
 import Steps from "./components/stepCounter";
 import Login from "./components/login";
+import schedule from 'node-schedule';
 
 const Axios = axios.create({
     withCredentials: true
@@ -23,6 +24,17 @@ class App extends Component {
         this.onChangeEmail = this.onChangeEmail.bind(this);
         this.onChangePassword = this.onChangePassword.bind(this);
         this.login = this.login.bind(this);
+
+        schedule.scheduleJob({ hour: 11, minute: 0 }, () => {
+            let alertMsg = "*vibration* Please take your morning blood pressure test *vibration*"
+            console.log(alertMsg)
+            alert(alertMsg)
+        });
+        schedule.scheduleJob({ hour: 19, minute: 0 }, () => {
+            let alertMsg = "*vibration* Please take your evening blood pressure test *vibration*"
+            console.log(alertMsg)
+            alert(alertMsg)
+        });
 
         this.state = {
             userId: '',
