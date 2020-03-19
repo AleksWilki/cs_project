@@ -40,7 +40,6 @@ export class registerStaff extends Component {
         })
     }
     register() {
-        console.log("here")
         const user = {
             name: this.state.name,
             email: this.state.email,
@@ -48,7 +47,6 @@ export class registerStaff extends Component {
         }
 
         Axios.post('http://localhost:3000/Staff/register', user).then(res => {
-            console.log("res1", res)
             this.props.history.push('/home');
         }).catch(err => {
             console.log("err", err);

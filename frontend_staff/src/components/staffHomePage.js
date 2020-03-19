@@ -12,7 +12,6 @@ const sevStyle = {
 
 class Patient extends Component {
     render() {
-        console.log("hello")
         if (this.props.patient.severity === 'critical') {
             return (
                 <tr style={sevStyle}>

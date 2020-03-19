@@ -50,7 +50,7 @@ class App extends Component {
             sleep: 300 + Math.floor(Math.random() * 5 * 60),
         }
         if (this.state.userId !== '') {
-            console.log("sleep sent to", this.state.userId);
+            console.log("sleep sent to", this.state.userId, updates);
             Axios.put(`http://localhost:3000/Patient/patient/${this.state.userId}`, updates);
         }
     }
@@ -84,7 +84,7 @@ class App extends Component {
                 heartRate: this.state.heartRate,
             }
             if (this.state.userId !== '') {
-                console.log("hr/steps sent to", this.state.userId);
+                console.log("hr/steps sent to", this.state.userId, updates);
                 Axios.put(`http://localhost:3000/Patient/patient/${this.state.userId}`, updates);
             }
         });
@@ -102,7 +102,6 @@ class App extends Component {
     }
     login() {
         Axios.get('http://localhost:3000/Patient/details').then(res => {
-            console.log("res2", res)
             this.setState({
                 userId: res.data._id,
                 interval: setInterval(this.onInterval, 6000),

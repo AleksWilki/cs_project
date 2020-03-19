@@ -31,14 +31,12 @@ export class login extends Component {
         })
     }
     login() {
-        console.log("here")
         const user = {
             email: this.state.email,
             password: this.state.password,
         }
 
         Axios.post('http://localhost:3000/Patient/login', user).then(res => {
-            console.log("res1", res)
             this.props.updateUser();
             this.props.history.push('/home');
         }).catch(err => {

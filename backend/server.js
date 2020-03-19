@@ -187,6 +187,7 @@ router.put('/Patient/patient/:id', function (req, res) {
         if (err) {
             console.log(err)
         } else if (patient) {
+            console.log("Patient " + patient.name + " Edit Req:" + req.body);
             req.body.bloodPressure ? patient.bloodPressureHistory.unshift(req.body.bloodPressure) : null;
             req.body.stepsTaken ? patient.stepsTakenToday = req.body.stepsTaken : null;
             req.body.calories ? patient.calorieIntakeToday = patient.calorieIntakeToday + parseInt(req.body.calories) : null;
@@ -201,7 +202,6 @@ router.put('/Patient/patient/:id', function (req, res) {
                 patient.heartRateAverageToday = [(patient.heartRateAverageToday[1] + heartRate) / (patient.heartRateAverageToday[2] + 1), patient.heartRateAverageToday[1] + heartRate, patient.heartRateAverageToday[2] + 1]
             }
             patient.severity = 'low'
-            console.log(patient)
             if (patient.alcoholIntakeToday > 8 || patient.heartRatePeakToday > 120 || patient.heartRateAverageToday[0] > 80) {
                 patient.severity = 'medium'
             }
@@ -251,7 +251,6 @@ router.get('/Patient', function (req, res) {
     })
 });
 router.get('/Patient/:filter', function (req, res) {
-    console.log("here?")
     let filterJson = JSON.parse(`{${req.params.filter}}`);
     for (var param in filterJson) {
         if (filterJson[param] === '') {

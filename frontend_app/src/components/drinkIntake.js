@@ -23,7 +23,6 @@ export class drinkIntake extends Component {
     }
     submitDrink() {
         console.log(this.state.caloriesAlcohol)
-        console.log("beep");
         if (this.state.caloriesAlcohol[0] !== 0) {
             let updates = {
                 calories: this.state.caloriesAlcohol[0],

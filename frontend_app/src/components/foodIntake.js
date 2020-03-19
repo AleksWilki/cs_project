@@ -21,7 +21,6 @@ export class foodIntake extends Component {
         })
     }
     submitFood() {
-        console.log("beep");
         if (this.state.calories !== 0) {
             let updates = {
                 calories: this.state.calories,
