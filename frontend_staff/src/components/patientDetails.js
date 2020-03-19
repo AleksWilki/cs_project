@@ -96,13 +96,9 @@ class patientDetails extends Component {
                             <div className="row">
                                 <div className="col-md-12">
                                     <table className="table table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th>Daily Heart Rate Average History (Today ->)</th>
-                                            </tr>
-                                        </thead>
                                         <tbody>
                                             <tr>
+                                                <th>Heart Rate Daily Average (Today ->)</th>
                                                 <td>{Math.round(this.state.patient.heartRateAverageToday[0] * 10) / 10}</td>
                                                 <td>{Math.round(this.state.patient.heartRateAverageHistory[0] * 10) / 10}</td>
                                                 <td>{Math.round(this.state.patient.heartRateAverageHistory[1] * 10) / 10}</td>
@@ -110,20 +106,8 @@ class patientDetails extends Component {
                                                 <td>{Math.round(this.state.patient.heartRateAverageHistory[3] * 10) / 10}</td>
                                                 <td>{Math.round(this.state.patient.heartRateAverageHistory[4] * 10) / 10}</td>
                                             </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <div className="row">
-                                <div className="col-md-12">
-                                    <table className="table table-striped">
-                                        <thead>
                                             <tr>
-                                                <th>Blood Pressure Daily Average History (Today ->)</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
+                                                <th>Blood Pressure Results (Latest ->)</th>
                                                 <td>{this.state.patient.bloodPressureHistory[0] ? this.state.patient.bloodPressureHistory[0][0] + ", " + this.state.patient.bloodPressureHistory[0][1] : "NaN"}</td>
                                                 <td>{this.state.patient.bloodPressureHistory[1] ? this.state.patient.bloodPressureHistory[1][0] + ", " + this.state.patient.bloodPressureHistory[1][1] : "NaN"}</td>
                                                 <td>{this.state.patient.bloodPressureHistory[2] ? this.state.patient.bloodPressureHistory[2][0] + ", " + this.state.patient.bloodPressureHistory[2][1] : "NaN"}</td>
@@ -131,20 +115,8 @@ class patientDetails extends Component {
                                                 <td>{this.state.patient.bloodPressureHistory[4] ? this.state.patient.bloodPressureHistory[4][0] + ", " + this.state.patient.bloodPressureHistory[4][1] : "NaN"}</td>
                                                 <td>{this.state.patient.bloodPressureHistory[5] ? this.state.patient.bloodPressureHistory[5][0] + ", " + this.state.patient.bloodPressureHistory[5][1] : "NaN"}</td>
                                             </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <div className="row">
-                                <div className="col-md-12">
-                                    <table className="table table-striped">
-                                        <thead>
                                             <tr>
-                                                <th>Calorie Intake Daily Average History (Today ->)</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
+                                                <th>Calorie Intake Daily (Today ->)</th>
                                                 <td>{this.state.patient.calorieIntakeToday / 1}</td>
                                                 <td>{this.state.patient.calorieIntakeHistory[0] / 1}</td>
                                                 <td>{this.state.patient.calorieIntakeHistory[1] / 1}</td>
@@ -152,20 +124,8 @@ class patientDetails extends Component {
                                                 <td>{this.state.patient.calorieIntakeHistory[3] / 1}</td>
                                                 <td>{this.state.patient.calorieIntakeHistory[4] / 1}</td>
                                             </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <div className="row">
-                                <div className="col-md-12">
-                                    <table className="table table-striped">
-                                        <thead>
                                             <tr>
-                                                <th>Alcohol Intake Daily (Units) History (Today ->)</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
+                                                <th>Alcohol Intake Daily (Units) (Today ->)</th>
                                                 <td>{this.state.patient.alcoholIntakeToday / 1}</td>
                                                 <td>{this.state.patient.alcoholIntakeHistory[0] / 1}</td>
                                                 <td>{this.state.patient.alcoholIntakeHistory[1] / 1}</td>
@@ -173,20 +133,8 @@ class patientDetails extends Component {
                                                 <td>{this.state.patient.alcoholIntakeHistory[3] / 1}</td>
                                                 <td>{this.state.patient.alcoholIntakeHistory[4] / 1}</td>
                                             </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <div className="row">
-                                <div className="col-md-12">
-                                    <table className="table table-striped">
-                                        <thead>
                                             <tr>
-                                                <th>Steps taken Daily History (Today ->)</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
+                                                <th>Steps taken Daily (Today ->)</th>
                                                 <td>{this.state.patient.stepsTakenToday / 1}</td>
                                                 <td>{this.state.patient.stepsTakenHistory[0] / 1}</td>
                                                 <td>{this.state.patient.stepsTakenHistory[1] / 1}</td>
@@ -194,20 +142,8 @@ class patientDetails extends Component {
                                                 <td>{this.state.patient.stepsTakenHistory[3] / 1}</td>
                                                 <td>{this.state.patient.stepsTakenHistory[4] / 1}</td>
                                             </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <div className="row">
-                                <div className="col-md-12">
-                                    <table className="table table-striped">
-                                        <thead>
                                             <tr>
-                                                <th>Time Slept Daily History (Today ->)</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
+                                                <th>Time Slept Daily (Today ->)</th>
                                                 <td>{Math.round((this.state.patient.timeSleptToday / 60) * 10) / 10}</td>
                                                 <td>{Math.round((this.state.patient.timeSleptHistory[0] / 60) * 10) / 10}</td>
                                                 <td>{Math.round((this.state.patient.timeSleptHistory[1] / 60) * 10) / 10}</td>
@@ -219,6 +155,7 @@ class patientDetails extends Component {
                                     </table>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                     <div style={backBtn}>
