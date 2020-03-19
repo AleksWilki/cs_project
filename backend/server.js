@@ -20,6 +20,7 @@ schedule.scheduleJob({ hour: 00, minute: 00 }, () => {
     Patient.find({}).then(function (patients) {
         patients.forEach(function (patient) {
             console.log(patient)
+            patient.heartRatePeakToday = 0;
             patient.heartRateAverageHistoryheartRateAverageHistory.unshift(patient.heartRateAverageToday);
             patient.calorieIntakeHistory.unshift(patient.calorieIntakeToday);
             patient.alcoholIntakeHistory.unshift(patient.alcoholIntakeToday);
@@ -38,7 +39,7 @@ passport.serializeUser(function (user, done) {
 passport.deserializeUser(
     function (req, id, done) {
         var DB;
-        console.log("url",req.url)
+        console.log("url", req.url)
         if (req.url.includes("/Staff/")) {
             DB = Staff;
         } else if (req.url.includes("/Patient/")) {
@@ -199,8 +200,8 @@ router.put('/Patient/patient/:id', function (req, res) {
                 }
                 patient.heartRateAverageToday = [(patient.heartRateAverageToday[1] + heartRate) / (patient.heartRateAverageToday[2] + 1), patient.heartRateAverageToday[1] + heartRate, patient.heartRateAverageToday[2] + 1]
             }
-            console.log(req.body);
             patient.severity = 'low'
+            console.log(patient)
             if (patient.alcoholIntakeToday > 8 || patient.heartRatePeakToday > 120 || patient.heartRateAverageToday[0] > 80) {
                 patient.severity = 'medium'
             }

@@ -7,6 +7,7 @@ import HR from "./components/heartRate";
 import BP from "./components/bloodPreasure";
 import Steps from "./components/stepCounter";
 import Login from "./components/login";
+import schedule from 'node-schedule';
 
 const Axios = axios.create({
     withCredentials: true
@@ -23,6 +24,17 @@ class App extends Component {
         this.onChangeEmail = this.onChangeEmail.bind(this);
         this.onChangePassword = this.onChangePassword.bind(this);
         this.login = this.login.bind(this);
+
+        schedule.scheduleJob({ hour: 11, minute: 0 }, () => {
+            let alertMsg = "*vibration* Please take your morning blood pressure test *vibration*"
+            console.log(alertMsg)
+            alert(alertMsg)
+        });
+        schedule.scheduleJob({ hour: 19, minute: 0 }, () => {
+            let alertMsg = "*vibration* Please take your evening blood pressure test *vibration*"
+            console.log(alertMsg)
+            alert(alertMsg)
+        });
 
         this.state = {
             userId: '',
@@ -45,14 +57,15 @@ class App extends Component {
     sendBloodPressure() {
         this.setState({
             bloodPressure: [90 + Math.floor(Math.random() * 30), 60 + Math.floor(Math.random() * 20)]
+        }, () => {
+            let updates = {
+                bloodPressure: this.state.bloodPressure
+            }
+            if (this.state.userId !== '') {
+                console.log("bp sent to", this.state.userId, updates);
+                Axios.put(`http://localhost:3000/Patient/patient/${this.state.userId}`, updates);
+            }
         });
-        let updates = {
-            bloodPressure: this.state.bloodPressure
-        }
-        if (this.state.userId !== '') {
-            console.log("bp sent to", this.state.userId);
-            Axios.put(`http://localhost:3000/Patient/patient/${this.state.userId}`, updates);
-        }
     }
     onInterval() {
         var newDay = (new Date()).getDay();
@@ -65,15 +78,17 @@ class App extends Component {
             previousDay: newDay,
             stepsTaken: this.state.stepsTaken + 2,
             heartRate: 60 + Math.floor(Math.random() * 40),
+        }, () => {
+            let updates = {
+                stepsTaken: this.state.stepsTaken,
+                heartRate: this.state.heartRate,
+            }
+            if (this.state.userId !== '') {
+                console.log("hr/steps sent to", this.state.userId);
+                Axios.put(`http://localhost:3000/Patient/patient/${this.state.userId}`, updates);
+            }
         });
-        let updates = {
-            stepsTaken: this.state.stepsTaken,
-            heartRate: this.state.heartRate,
-        }
-        if (this.state.userId !== '') {
-            console.log("hr/steps sent to", this.state.userId);
-            Axios.put(`http://localhost:3000/Patient/patient/${this.state.userId}`, updates);
-        }
+
     }
     onChangeEmail(e) {
         this.setState({
