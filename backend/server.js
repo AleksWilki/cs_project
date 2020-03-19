@@ -39,7 +39,7 @@ passport.serializeUser(function (user, done) {
 passport.deserializeUser(
     function (req, id, done) {
         var DB;
-        var userType = JSON.parse(req.sessionStore.sessions[Object.keys(req.sessionStore.sessions)[0]])['passport']['user']['type'];
+        var userType = getReqUserType(req);
         if (userType === "staff") {
             DB = Staff;
         } else if (userType === "patient") {
@@ -91,19 +91,23 @@ app.use(expressSession({
     saveUninitialized: false
 }));
 
+const getReqUserType = function (req) {
+    return JSON.parse(req.sessionStore.sessions[Object.keys(req.sessionStore.sessions)[0]])['passport']['user']['type'];
+}
+
 const isPatient = function (req) {
-    return req.isAuthenticated() && req.user.type === 'patient'
+    return getReqUserType(req) === 'patient'
 }
 const isStaff = function (req) {
-    return req.isAuthenticated() && req.user.type === 'staff'
+    return getReqUserType(req) === 'staff'
 }
 const isStaffOrPatient = function (req) {
-    return req.isAuthenticated()
+    return getReqUserType(req) === 'staff' || getReqUserType(req) === 'patient'
 }
 
 const getUserDetails = function (req) {
     return new Promise(function (resolve, reject) {
-        if (req.isAuthenticated()) {
+        if (isStaffOrPatient(req)) {
             let details = req.user
             details.password = undefined
             details.authenticated = true
@@ -281,7 +285,6 @@ router.post('/Patient/logout', function (req, res) {
     res.status(200).end();
 });
 router.get('/Patient', function (req, res) {
-    console.log(req.user)
     if (isStaff(req)) {
         Patient.find((err, patient) => {
             if (err) {
