@@ -49,7 +49,7 @@ const icon = {
     padding: "10px"
 }
 const inIcon = {
-    'font-size': "10em"
+    'fontSize': "10em"
 }
 
 const linkStyle = {

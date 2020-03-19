@@ -7,7 +7,7 @@ const patientUrl = "http://localhost:3000/Patient/"
 
 const sevStyle = {
     'color': 'white',
-    'background-color': 'red'
+    'backgroundColor': 'red'
 }
 
 class Patient extends Component {
