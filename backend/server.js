@@ -39,10 +39,10 @@ passport.serializeUser(function (user, done) {
 passport.deserializeUser(
     function (req, id, done) {
         var DB;
-        console.log("url", req.url)
-        if (req.url.includes("/Staff/")) {
+        var userType = JSON.parse(req.sessionStore.sessions[Object.keys(req.sessionStore.sessions)[0]])['passport']['user']['type'];
+        if (userType === "staff") {
             DB = Staff;
-        } else if (req.url.includes("/Patient/")) {
+        } else if (userType === "patient") {
             DB = Patient
         }
         DB.findById(id, function (err, user) {
@@ -118,6 +118,7 @@ const getUserDetails = function (req) {
 }
 
 router.get('/User/details', function (req, res) {
+    console.log(req.user)
     getUserDetails(req).then(details => {
         res.json(details)
     })
@@ -280,6 +281,7 @@ router.post('/Patient/logout', function (req, res) {
     res.status(200).end();
 });
 router.get('/Patient', function (req, res) {
+    console.log(req.user)
     if (isStaff(req)) {
         Patient.find((err, patient) => {
             if (err) {
