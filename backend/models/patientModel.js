@@ -58,6 +58,7 @@ const patientSchema = new mongoose.Schema({
     },
     heartRatePeakToday: {
         type: Number,
+        default: 0
     },
     heartRateAverageToday: {
         type: Array,
