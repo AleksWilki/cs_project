@@ -97,6 +97,9 @@ const isPatient = function (req) {
 const isStaff = function (req) {
     return req.isAuthenticated() && req.user.type === 'staff'
 }
+const isStaffOrPatient = function (req) {
+    return req.isAuthenticated()
+}
 
 const getUserDetails = function (req) {
     return new Promise(function (resolve, reject) {
@@ -130,38 +133,50 @@ router.post('/Staff/register', function (req, res) {
     });
 });
 router.get('/Staff/:id', function (req, res) {
-    Staff.findById(req.params.id, (err, staff) => {
-        if (staff) {
-            res.status(200).json(staff);
-        } else {
-            res.status(404).end();
-        }
-    });
+    if (isStaff(req)) {
+        Staff.findById(req.params.id, (err, staff) => {
+            if (staff) {
+                res.status(200).json(staff);
+            } else {
+                res.status(404).end();
+            }
+        });
+    } else {
+        res.status(401).send("Invalid Permissions");
+    }
 });
 router.put('/Staff/:id', function (req, res) {
-    Staff.findById(req.params.id, (err, staff) => {
-        if (staff) {
-            staff = req.body;
-            staff.save().then(() => {
-                res.status(200).end();
-            }).catch(err => {
-                res.status(400).send(err);
-            });
-        }
-        else {
-            res.status(404).end();
-        }
-    });
+    if (isStaff(req)) {
+        Staff.findById(req.params.id, (err, staff) => {
+            if (staff) {
+                staff = req.body;
+                staff.save().then(() => {
+                    res.status(200).end();
+                }).catch(err => {
+                    res.status(400).send(err);
+                });
+            }
+            else {
+                res.status(404).end();
+            }
+        });
+    } else {
+        res.status(401).send("Invalid Permissions");
+    }
 });
 router.delete('/Staff/:id', function (req, res) {
-    Staff.findByIdAndDelete(req.params.id, (err, staff) => {
-        if (staff) {
-            res.status(200);
-        }
-        else {
-            res.status(404).end();
-        }
-    });
+    if (isStaff(req)) {
+        Staff.findByIdAndDelete(req.params.id, (err, staff) => {
+            if (staff) {
+                res.status(200);
+            }
+            else {
+                res.status(404).end();
+            }
+        });
+    } else {
+        res.status(401).send("Invalid Permissions");
+    }
 });
 router.post('/Staff/login', passport.authenticate('local'), function (req, res) {
     res.status(200).end();
@@ -174,72 +189,88 @@ router.post('/Staff/logout', function (req, res) {
 
 // Patient Routes
 router.post('/Patient/register', function (req, res) {
-    let patient = new Patient(req.body);
-    patient.save().then(() => {
-        res.status(200).end();
-    }).catch(err => {
-        res.status(400).send(err);
-    });
+    if (isStaff(req)) {
+        let patient = new Patient(req.body);
+        patient.save().then(() => {
+            res.status(200).end();
+        }).catch(err => {
+            res.status(400).send(err);
+        });
+    } else {
+        res.status(401).send("Invalid Permissions");
+    }
 });
 router.get('/Patient/patient/:id', function (req, res) {
-    Patient.findById(req.params.id, (err, patient) => {
-        if (patient) {
-            res.status(200).json(patient);
-        } else {
-            res.status(404).end();
-        }
-    });
+    if (isStaffOrPatient(req)) {
+        Patient.findById(req.params.id, (err, patient) => {
+            if (patient) {
+                res.status(200).json(patient);
+            } else {
+                res.status(404).end();
+            }
+        });
+    } else {
+        res.status(401).send("Invalid Permissions");
+    }
 });
 router.put('/Patient/patient/:id', function (req, res) {
-    Patient.findById(req.params.id, (err, patient) => {
-        if (err) {
-            console.log(err)
-        } else if (patient) {
-            console.log("Patient " + patient.name + " Edit Req:" + req.body);
-            req.body.bloodPressure ? patient.bloodPressureHistory.unshift(req.body.bloodPressure) : null;
-            req.body.stepsTaken ? patient.stepsTakenToday = req.body.stepsTaken : null;
-            req.body.calories ? patient.calorieIntakeToday = patient.calorieIntakeToday + parseInt(req.body.calories) : null;
-            req.body.alcohol ? patient.alcoholIntakeToday = patient.alcoholIntakeToday + parseInt(req.body.alcohol) : null;
-            req.body.sleep ? patient.timeSleptToday = patient.timeSleptToday + parseInt(req.body.sleep) : null;
-            if (req.body.heartRate) {
-                var heartRate = parseInt(req.body.heartRate)
-                patient.latestHeartRate = heartRate
-                if (heartRate > patient.heartRatePeakToday) {
-                    patient.heartRatePeakToday = heartRate
-                }
-                patient.heartRateAverageToday = [(patient.heartRateAverageToday[1] + heartRate) / (patient.heartRateAverageToday[2] + 1), patient.heartRateAverageToday[1] + heartRate, patient.heartRateAverageToday[2] + 1]
-            }
-            patient.severity = 'low'
-            if (patient.alcoholIntakeToday > 8 || patient.heartRatePeakToday > 120 || patient.heartRateAverageToday[0] > 80) {
-                patient.severity = 'medium'
-            }
-            if (patient.alcoholIntakeToday > 11 || patient.heartRatePeakToday > 135 || patient.heartRateAverageToday[0] > 90) {
-                patient.severity = 'high'
-            }
-            if (patient.alcoholIntakeToday > 13 || patient.heartRatePeakToday > 150 || patient.heartRateAverageToday[0] > 100) {
-                patient.severity = 'critical'
-            }
-            patient.save().then(() => {
-                res.status(200).end();
-            }).catch(err => {
+    if (isPatient(req)) {
+        Patient.findById(req.params.id, (err, patient) => {
+            if (err) {
                 console.log(err)
-                res.status(400).send(err);
-            });
-        }
-        else {
-            res.status(404).end();
-        }
-    });
+            } else if (patient) {
+                console.log("Patient " + patient.name + " Edit Req:" + req.body);
+                req.body.bloodPressure ? patient.bloodPressureHistory.unshift(req.body.bloodPressure) : null;
+                req.body.stepsTaken ? patient.stepsTakenToday = req.body.stepsTaken : null;
+                req.body.calories ? patient.calorieIntakeToday = patient.calorieIntakeToday + parseInt(req.body.calories) : null;
+                req.body.alcohol ? patient.alcoholIntakeToday = patient.alcoholIntakeToday + parseInt(req.body.alcohol) : null;
+                req.body.sleep ? patient.timeSleptToday = patient.timeSleptToday + parseInt(req.body.sleep) : null;
+                if (req.body.heartRate) {
+                    var heartRate = parseInt(req.body.heartRate)
+                    patient.latestHeartRate = heartRate
+                    if (heartRate > patient.heartRatePeakToday) {
+                        patient.heartRatePeakToday = heartRate
+                    }
+                    patient.heartRateAverageToday = [(patient.heartRateAverageToday[1] + heartRate) / (patient.heartRateAverageToday[2] + 1), patient.heartRateAverageToday[1] + heartRate, patient.heartRateAverageToday[2] + 1]
+                }
+                patient.severity = 'low'
+                if (patient.alcoholIntakeToday > 8 || patient.heartRatePeakToday > 120 || patient.heartRateAverageToday[0] > 80) {
+                    patient.severity = 'medium'
+                }
+                if (patient.alcoholIntakeToday > 11 || patient.heartRatePeakToday > 135 || patient.heartRateAverageToday[0] > 90) {
+                    patient.severity = 'high'
+                }
+                if (patient.alcoholIntakeToday > 13 || patient.heartRatePeakToday > 150 || patient.heartRateAverageToday[0] > 100) {
+                    patient.severity = 'critical'
+                }
+                patient.save().then(() => {
+                    res.status(200).end();
+                }).catch(err => {
+                    console.log(err)
+                    res.status(400).send(err);
+                });
+            }
+            else {
+                res.status(404).end();
+            }
+        });
+    } else {
+        res.status(401).send("Invalid Permissions");
+    }
 });
 router.delete('/Patient/patient/:id', function (req, res) {
-    Patient.findByIdAndDelete(req.params.id, (err, File) => {
-        if (patient) {
-            res.status(200);
-        }
-        else {
-            res.status(404).end();
-        }
-    });
+    if (isStaff(req)) {
+        Patient.findByIdAndDelete(req.params.id, (err, File) => {
+            if (patient) {
+                res.status(200);
+            }
+            else {
+                res.status(404).end();
+            }
+        });
+    } else {
+        res.status(401).send("Invalid Permissions");
+    }
 });
 router.post('/Patient/login', passport.authenticate('local'), function (req, res) {
     res.status(200).end();
@@ -249,33 +280,41 @@ router.post('/Patient/logout', function (req, res) {
     res.status(200).end();
 });
 router.get('/Patient', function (req, res) {
-    Patient.find((err, patient) => {
-        if (err) {
-            console.log(err);
-        }
-        else {
-            res.json(patient);
-        }
-    })
+    if (isStaff(req)) {
+        Patient.find((err, patient) => {
+            if (err) {
+                console.log(err);
+            }
+            else {
+                res.json(patient);
+            }
+        })
+    } else {
+        res.status(401).send("Invalid Permissions");
+    }
 });
 router.get('/Patient/:filter', function (req, res) {
-    let filterJson = JSON.parse(`{${req.params.filter}}`);
-    for (var param in filterJson) {
-        if (filterJson[param] === '') {
-            delete filterJson[param];
-        } else if (typeof filterJson[param] === String) {
-            filterJson[param] = new RegExp(filterJson[param], "i");
+    if (isStaff(req)) {
+        let filterJson = JSON.parse(`{${req.params.filter}}`);
+        for (var param in filterJson) {
+            if (filterJson[param] === '') {
+                delete filterJson[param];
+            } else if (typeof filterJson[param] === String) {
+                filterJson[param] = new RegExp(filterJson[param], "i");
+            }
         }
+        console.log(filterJson)
+        Patient.find(filterJson, null, (err, patients) => {
+            if (err) {
+                console.log(err);
+            }
+            else {
+                res.json(patients);
+            }
+        })
+    } else {
+        res.status(401).send("Invalid Permissions");
     }
-    console.log(filterJson)
-    Patient.find(filterJson, null, (err, patients) => {
-        if (err) {
-            console.log(err);
-        }
-        else {
-            res.json(patients);
-        }
-    })
 });
 
 // Middleware
