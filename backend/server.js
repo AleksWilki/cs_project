@@ -90,7 +90,7 @@ app.use(expressSession({
     resave: false,
     saveUninitialized: false
 }));
-const getPatientDetails = function (req) {
+const getUserDetails = function (req) {
     return new Promise(function (resolve, reject) {
         if (req.isAuthenticated()) {
             let details = req.user
@@ -106,8 +106,8 @@ const getPatientDetails = function (req) {
     })
 }
 
-router.get('/Patient/details', function (req, res) {
-    getPatientDetails(req).then(details => {
+router.get('/User/details', function (req, res) {
+    getUserDetails(req).then(details => {
         res.json(details)
     })
 });

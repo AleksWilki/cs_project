@@ -101,7 +101,7 @@ class App extends Component {
         })
     }
     login() {
-        Axios.get('http://localhost:3000/Patient/details').then(res => {
+        Axios.get('http://localhost:3000/User/details').then(res => {
             this.setState({
                 userId: res.data._id,
                 interval: setInterval(this.onInterval, 6000),

@@ -29,7 +29,7 @@ class App extends Component {
     }
     updateUser() {
         console.log("updating")
-        Axios.get('http://localhost:3000/Patient/details').then(res => {
+        Axios.get('http://localhost:3000/User/details').then(res => {
             console.log("updateRes:", res.data)
             this.setState({ details: res.data });
             setInterval(this.refreshUser, 5000);
@@ -39,7 +39,7 @@ class App extends Component {
     }
     refreshUser() {
         console.log("refreshing")
-        Axios.get('http://localhost:3000/Patient/details').then(res => {
+        Axios.get('http://localhost:3000/User/details').then(res => {
             this.setState({ details: res.data });
         }).catch((err) => {
             console.log(err)
