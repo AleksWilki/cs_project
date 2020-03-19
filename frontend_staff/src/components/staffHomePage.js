@@ -74,8 +74,8 @@ class staffHomePage extends Component {
         });
     }
     presetAttention() {
-        this.setState({ filterSeverity: "critical", filterAppointment: true });
-        let filter = `"severity":"critical","appointmentBooked":true`;
+        this.setState({ filterSeverity: "critical", filterAppointment: false });
+        let filter = `"severity":"critical","appointmentBooked":false`;
         Axios.get(patientUrl + filter).then(res => {
             this.setState({ patients: res.data });
         }).catch((err) => {

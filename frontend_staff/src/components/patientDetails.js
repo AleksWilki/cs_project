@@ -34,6 +34,7 @@ class patientDetails extends Component {
                     <div className="card card-default">
                         <div className="card-header"><strong>{this.state.patient.name + "'s Details"}</strong></div>
                         <div className="card-body">
+                            <button>Book / ReBook Appointment</button>
                             <div className="row">
                                 <div className="col-md-12">
                                     <table className="table table-striped">
@@ -51,7 +52,7 @@ class patientDetails extends Component {
                                                 <td>{this.state.patient.name}</td>
                                                 <td>{this.state.patient.birthDate ? this.state.patient.birthDate.substring(0, 10) : ""}</td>
                                                 <td>{this.state.patient.appointmentBooked ? "yes" : "no"}</td>
-                                                <td>{this.state.patient.appointmentDate}</td>
+                                                <td>{this.state.patient.appointmentDate ? this.state.patient.appointmentDate : 'N/A'}</td>
                                                 <td>{this.state.patient.severity}</td>
                                             </tr>
 
