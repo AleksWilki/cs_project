@@ -9,6 +9,7 @@ export class Header extends Component {
                 <div style={headerStyle}>
                     <h1>Staff Patient Detail Viewer</h1>
                     <Link to="/home" style={linkStyle}> Home</Link> |
+                    <Link style={linkStyle} to="/join"> Medical Staff Chat Rooms </Link> |
                     <Link to="/register-patient" style={linkStyle}> register patient</Link>
                 </div>
             )

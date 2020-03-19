@@ -1,7 +1,6 @@
 // Imports and Initialization
 const express = require('express');
 const app = express();
-const server = require('http').createServer(app);
 const port = 3000;
 const router = express.Router();
 const bodyParser = require('body-parser');
@@ -16,7 +15,9 @@ const Patient = require('./models/patientModel');
 const schedule = require('node-schedule');
 const cookieParser = require('cookie-parser');
 
+const http = require('http');                   // adds use of http requests
 const socketio = require('socket.io');          // adds use of socket.io module
+const server = http.createServer(app);          // creates chat server using http and express server
 const io = socketio(server);                       // creates instance of io using socket and express servr
 const {addUser, removeUser, getUser, getUsersInRoom } = require('./controllers/users');             // initialises functions from users controller
 

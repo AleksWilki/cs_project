@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios';
 import "bootstrap/dist/css/bootstrap.min.css";
-import 'font-awesome/css/font-awesome.min.css';
+//import 'font-awesome/css/font-awesome.min.css';
 
 const Axios = axios.create({
     withCredentials: true

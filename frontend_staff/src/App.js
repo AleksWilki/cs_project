@@ -7,6 +7,8 @@ import Patient from "./components/patientDetails";
 import RegisterStaff from "./components/registerStaff";
 import LoginStaff from "./components/loginStaff";
 import RegisterPatient from "./components/registerPatient";
+import Join from "./components/Join";
+import Chat from "./components/Chat";
 
 class App extends Component {
     constructor(props) {
@@ -32,6 +34,8 @@ class App extends Component {
                     <Route path="/register-patient" component={RegisterPatient} />
                     <Route path="/home" component={Home} />
                     <Route path="/patient-details/:id" component={Patient} />
+                    <Route path="/join" component={Join} />
+                    <Route path="/chat" component={Chat} />
                 </div>
             </Router>
         )
