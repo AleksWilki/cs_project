@@ -5,9 +5,12 @@ const mongoose = require("mongoose");
 const Date2 = new Date("<YYYY-mm-dd>");
 
 const patientSchema = new mongoose.Schema({
+    type: {
+        type: String,
+        default: "patient"
+    },
     registerDate: {
         type: Date,
-        //required: true,
         default: Date.now
     },
     email: {

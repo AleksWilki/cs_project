@@ -2,6 +2,10 @@
 const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
 const staffSchema = new mongoose.Schema({
+    type: {
+        type: String,
+        default: "staff"
+    },
     email: {
         type: String,
         required: true,
